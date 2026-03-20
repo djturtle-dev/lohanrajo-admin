@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth/server';
 import { redirect } from 'next/navigation';
 import { toggleUserApproval, toggleUserRole } from '@/app/admin/actions';
 import { Shield, ShieldAlert, Check, X, User } from 'lucide-react';
+import { User as PrismaUser } from '@prisma/client';
 
 export default async function UsersAdmin() {
     const result = await auth.getSession();
@@ -49,7 +50,7 @@ export default async function UsersAdmin() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-brand-border">
-                            {allUsers.map((u) => (
+                            {allUsers.map((u: PrismaUser) => (
                                 <tr key={u.id} className="hover:bg-brand-light/20 transition-colors group">
                                     <td className="p-4 font-inter text-sm text-brand-text font-medium">
                                         {u.email}
