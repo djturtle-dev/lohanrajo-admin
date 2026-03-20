@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { Package, MessageSquare, Star, Users } from 'lucide-react';
+import ClarityMetrics from '@/components/admin/ClarityMetrics';
 
 export default async function AdminDashboard() {
     const [productCount, testimonialCount] = await Promise.all([
@@ -28,10 +29,8 @@ export default async function AdminDashboard() {
             </div>
 
             <div className="bg-brand-white border border-brand-border p-8">
-                <h2 className="font-oswald text-xl uppercase tracking-widest text-brand-text mb-6">Recent Activity</h2>
-                <div className="text-brand-muted text-sm border border-dashed border-brand-border p-12 text-center bg-brand-dark/50">
-                    Monitoring systems connected. No recent critical alerts.
-                </div>
+                <h2 className="font-oswald text-xl uppercase tracking-widest text-brand-text mb-6">Analytics</h2>
+                <ClarityMetrics />
             </div>
         </div>
     );
