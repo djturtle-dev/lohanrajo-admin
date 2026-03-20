@@ -1,0 +1,32 @@
+import { prisma } from '@/lib/prisma';
+import CategoriesManager from './CategoriesManager';
+
+export default async function CategoriesPage() {
+    const categories = await prisma.category.findMany({
+        include: {
+            subCategories: true,
+            _count: {
+                select: { products: true }
+            }
+        },
+        orderBy: { name: 'asc' }
+    });
+
+    return (
+        <div className="max-w-5xl mx-auto space-y-10">
+            <div className="flex items-center justify-between border-b border-brand-border pb-4">
+                <div>
+                    <h1 className="font-oswald text-3xl uppercase tracking-widest text-brand-text">
+                        Categories & Subcategories
+                    </h1>
+                    <p className="mt-1 text-sm text-brand-muted">Manage product hierarchy and grouping.</p>
+                </div>
+                <div className="text-xs font-oswald uppercase tracking-widest text-brand-muted">
+                    {categories.length} Categories
+                </div>
+            </div>
+
+            <CategoriesManager initialCategories={categories} />
+        </div>
+    );
+}

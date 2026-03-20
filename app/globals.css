@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+    --color-brand-dark: #eaeaea;
+    --color-brand-panel: #f8f8f8;
+    --color-brand-border: #bbbbbb;
+    --color-brand-accent: #fa0001;
+    --color-brand-text: #333333;
+    --color-brand-muted: #666666;
+    --color-brand-white: #ffffff;
+
+    --font-oswald: var(--font-oswald), sans-serif;
+    --font-inter: var(--font-inter), sans-serif;
+}
+
+@layer base {
+    body {
+        background:
+            linear-gradient(135deg, #0000 20.5%, #f8f8f8 0 29.5%, #0000 0) 0 10px,
+            linear-gradient(45deg, #0000 8%, #f8f8f8 0 17%, #0000 0 58%) 20px 0,
+            linear-gradient(135deg, #0000 8%, #f8f8f8 0 17%, #0000 0 58%, #f8f8f8 0 67%, #0000 0),
+            linear-gradient(45deg, #0000 8%, #f8f8f8 0 17%, #0000 0 58%, #f8f8f8 0 67%, #0000 0 83%, #f8f8f8 0 92%, #0000 0),
+            #ffffff;
+        background-size: 40px 40px;
+
+
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-brand-panel;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-brand-border rounded-none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-accent;
+}
+
+/* Text selection */
+::selection {
+    background-color: #fa0001;
+    color: #ffffff;
+}

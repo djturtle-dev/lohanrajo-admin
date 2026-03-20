@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AboutContent {
+  id                    String   @id @default("singleton")
+  title                 String
+  subtitle              String
+  profileContent        String
+  profileImage          String?
+  establishedText       String   @default("Established Industry Leaders")
+  accreditationContent  String
+  visionContent         String
+  updatedAt             DateTime
+  infrastructureContent String   @default("Our expansive manufacturing facility is equipped with state-of-the-art CNC machinery, automated welding stations, and an advanced powder-coating line. This robust infrastructure allows us to maintain strict tolerances and scale production seamlessly.")
+  infrastructureItems   String[] @default(["CNC Fabrication", "Automated Assembly", "Polymer & Powder Coating"])
+}
+
+model Category {
+  id          String        @id
+  name        String        @unique
+  createdAt   DateTime      @default(now())
+  Product     Product[]
+  SubCategory SubCategory[]
+}
+
+model Feedback {
+  id        String   @id
+  type      String
+  content   String
+  email     String
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id            String       @id
+  name          String
+  description   String
+  images        String[]     @default([])
+  categoryId    String
+  subCategoryId String?
+  Category      Category     @relation(fields: [categoryId], references: [id])
+  SubCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
+}
+
+model SubCategory {
+  id         String    @id
+  name       String    @unique
+  categoryId String
+  createdAt  DateTime  @default(now())
+  Product    Product[]
+  Category   Category  @relation(fields: [categoryId], references: [id])
+}
+
+model Testimonial {
+  id            String   @id
+  authorName    String?
+  authorAvatar  String?
+  content       String
+  rating        Int      @default(5)
+  source        String   @default("Direct")
+  sourceUrl     String?
+  screenshotUrl String?
+  isApproved    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  featured      Boolean  @default(false)
+}
+
+model User {
+  id    String @id
+  role  String @default("EDITOR")
+  email String @unique
+}

@@ -1,0 +1,17 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/about/page": "/admin/about",
+  "/admin/categories/page": "/admin/categories",
+  "/admin/home/page": "/admin/home",
+  "/admin/page": "/admin",
+  "/admin/products/page": "/admin/products",
+  "/admin/testimonials/page": "/admin/testimonials",
+  "/admin/users/page": "/admin/users",
+  "/api/auth/[...path]/route": "/api/auth/[...path]",
+  "/api/blobs/[filename]/route": "/api/blobs/[filename]",
+  "/favicon.ico/route": "/favicon.ico",
+  "/login/page": "/login",
+  "/page": "/",
+  "/signup/page": "/signup"
+}
