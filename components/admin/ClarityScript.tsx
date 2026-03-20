@@ -12,7 +12,8 @@ export default function ClarityScript() {
         }
 
         // Initialize Microsoft Clarity
-        (function (c: any, l: any, a: any, r: any, i: any, t: any, y: any) {
+        (function (c: any, l: any, a: any, r: any, i: any) {
+            let t: any, y: any;
             c[a] =
                 c[a] ||
                 function () {
