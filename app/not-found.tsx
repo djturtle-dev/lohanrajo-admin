@@ -8,7 +8,7 @@ export default function NotFound() {
     const mainUrl = process.env.NEXT_PUBLIC_MAIN_URL || 'http://localhost:3000';
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-white font-sans">
+        <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-brand-panel font-sans">
             {/* Geometric Background Pattern from globals.css */}
             <div 
                 className="absolute inset-0 opacity-40 pointer-events-none"
@@ -26,7 +26,7 @@ export default function NotFound() {
 
             {/* Content Container */}
             <div className="relative z-10 max-w-2xl w-full text-center animate-in fade-in slide-in-from-bottom-4 duration-1000">
-                <div className="bg-white/90 backdrop-blur-xl border border-brand-border p-8 md:p-12 shadow-2xl relative overflow-hidden group border-t-4 border-t-brand-accent">
+                <div className="bg-brand-panel/90 backdrop-blur-xl border border-brand-border p-8 md:p-12 shadow-2xl relative overflow-hidden group border-t-4 border-t-brand-accent">
                     
                     <div className="flex justify-center mb-6">
                         <div className="p-4 bg-brand-accent/5 rounded-full ring-1 ring-brand-accent/20 animate-pulse">
@@ -35,10 +35,10 @@ export default function NotFound() {
                     </div>
                     
                     <div>
-                        <h2 className="text-4xl md:text-5xl font-oswald font-bold uppercase tracking-tight text-brand-text mb-2">
+                        <h2 className="text-4xl md:text-5xl tracking-tight text-brand-text mb-2 fancy-text">
                             ADMIN ERROR <span className="text-brand-accent">404</span>
                         </h2>
-                        <h3 className="text-xl font-oswald font-medium uppercase tracking-widest text-brand-muted mb-6">
+                        <h3 className="text-xl font-sans font-medium uppercase tracking-widest text-brand-muted mb-6">
                             RESOURCE NOT FOUND
                         </h3>
                         
@@ -49,7 +49,7 @@ export default function NotFound() {
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             <Link 
                                 href={adminUrl}
-                                className="flex items-center gap-3 px-8 py-4 bg-brand-text text-white font-oswald font-bold uppercase tracking-widest hover:bg-brand-accent transition-all w-full sm:w-auto justify-center group"
+                                className="flex items-center gap-3 px-8 py-4 bg-brand-text text-white font-sans font-bold uppercase tracking-widest hover:bg-brand-accent transition-all w-full sm:w-auto justify-center group"
                             >
                                 <LayoutDashboard className="w-5 h-5 group-hover:scale-110 transition-transform" />
                                 Admin Dashboard
@@ -57,14 +57,14 @@ export default function NotFound() {
 
                             <Link 
                                 href={mainUrl}
-                                className="flex items-center gap-3 px-8 py-4 bg-white border border-brand-border text-brand-text font-oswald font-bold uppercase tracking-widest hover:border-brand-accent hover:text-brand-accent transition-all w-full sm:w-auto justify-center group"
+                                className="flex items-center gap-3 px-8 py-4 bg-brand-panel border border-brand-border text-brand-text font-sans font-bold uppercase tracking-widest hover:border-brand-accent hover:text-brand-accent transition-all w-full sm:w-auto justify-center group"
                             >
                                 <Home className="w-5 h-5 group-hover:scale-110 transition-transform" />
                                 Public Site
                             </Link>
                         </div>
 
-                        <div className="mt-12 flex items-center justify-center gap-2 text-brand-muted font-oswald font-bold uppercase tracking-widest text-xs opacity-50">
+                        <div className="mt-12 flex items-center justify-center gap-2 text-brand-muted font-sans font-bold uppercase tracking-widest text-xs opacity-50">
                             <span>LOHANRAJO</span>
                             <div className="w-1 h-1 bg-brand-accent rounded-full" />
                             <span>ADMINISTRATION</span>

@@ -30,7 +30,7 @@ export default async function HomeAdminPage() {
         <div className="max-w-5xl mx-auto space-y-10">
             <div className="flex items-center justify-between border-b border-brand-border pb-4">
                 <div>
-                    <h1 className="font-oswald text-3xl uppercase tracking-widest text-brand-text">
+                    <h1 className="text-3xl text-brand-text fancy-text">
                         Home Page Content
                     </h1>
                     <p className="mt-1 text-sm text-brand-muted">Manage animated hero text and the 3 focus pillars.</p>

@@ -104,7 +104,7 @@ export default function ProductsTable({ initialProducts, categories }: Props) {
                     <select 
                         value={filterCategoryId} 
                         onChange={e => setFilterCategoryId(e.target.value)}
-                        className="bg-transparent text-xs font-oswald tracking-wide uppercase focus:outline-none text-brand-text outline-none appearance-none cursor-pointer pr-4"
+                        className="bg-transparent text-xs font-sans tracking-wide uppercase focus:outline-none text-brand-text outline-none appearance-none cursor-pointer pr-4"
                     >
                         <option value="all">All Categories</option>
                         {categories.map(c => (
@@ -114,49 +114,49 @@ export default function ProductsTable({ initialProducts, categories }: Props) {
                 </div>
             </div>
 
-            <div className="bg-white border border-brand-border overflow-x-auto shadow-sm">
+            <div className="bg-brand-panel border border-brand-border overflow-x-auto shadow-sm">
                 <table className="w-full text-left border-collapse min-w-[900px]">
                     <thead>
                         <tr className="border-b border-brand-border bg-brand-panel">
-                            <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted w-20">Image</th>
+                            <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted w-20">Image</th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('name')}
                             >
                                 <div className="flex items-center gap-1">Name <SortIcon field="name" /></div>
                             </th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('category')}
                             >
                                 <div className="flex items-center gap-1">Category <SortIcon field="category" /></div>
                             </th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('subCategory')}
                             >
                                 <div className="flex items-center gap-1">Sub-Category <SortIcon field="subCategory" /></div>
                             </th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('createdAt')}
                             >
                                 <div className="flex items-center gap-1">Created <SortIcon field="createdAt" /></div>
                             </th>
-                            <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted text-right">Action</th>
+                            <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-brand-border">
                         {processedProducts.length === 0 ? (
                             <tr>
-                                <td colSpan={6} className="p-12 text-center text-brand-muted text-sm font-oswald tracking-widest uppercase">
+                                <td colSpan={6} className="p-12 text-center text-brand-muted text-sm font-sans tracking-widest uppercase">
                                     No products found matching your criteria.
                                 </td>
                             </tr>
                         ) : processedProducts.map((p) => (
                             <tr key={p.id} className="hover:bg-brand-panel transition-colors group">
                                 <td className="p-4">
-                                    <div className="w-12 h-12 border border-brand-border bg-white overflow-hidden shadow-sm">
+                                    <div className="w-12 h-12 border border-brand-border bg-brand-panel overflow-hidden shadow-sm">
                                         {p.images && p.images.length > 0 ? (
                                             <img 
                                                 src={getAssetUrl(p.images[0])} 
@@ -176,20 +176,20 @@ export default function ProductsTable({ initialProducts, categories }: Props) {
                                     </div>
                                 </td>
                                 <td className="p-4">
-                                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/5 text-brand-accent text-[10px] font-oswald tracking-widest uppercase border border-brand-accent/10">
+                                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/5 text-brand-accent text-[10px] font-sans tracking-widest uppercase border border-brand-accent/10">
                                         {p.category.name}
                                     </span>
                                 </td>
                                 <td className="p-4">
                                     {p.subCategory ? (
-                                        <span className="text-brand-muted text-xs font-inter">
+                                        <span className="text-brand-muted text-xs font-sans">
                                             {p.subCategory.name}
                                         </span>
                                     ) : (
                                         <span className="text-brand-muted/40 text-[10px]">—</span>
                                     )}
                                 </td>
-                                <td className="p-4 font-inter text-xs text-brand-muted whitespace-nowrap">
+                                <td className="p-4 font-sans text-xs text-brand-muted whitespace-nowrap">
                                     {new Date(p.createdAt).toLocaleDateString('en-IN', {
                                         day: '2-digit', month: 'short', year: 'numeric'
                                     })}
@@ -197,7 +197,7 @@ export default function ProductsTable({ initialProducts, categories }: Props) {
                                 <td className="p-4 text-right">
                                     <button 
                                         onClick={() => setSelectedProduct(p)}
-                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-brand-border text-brand-text hover:bg-brand-accent hover:text-white hover:border-brand-accent transition-all font-oswald text-[10px] uppercase tracking-widest shadow-sm"
+                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-panel border border-brand-border text-brand-text hover:bg-brand-accent hover:text-white hover:border-brand-accent transition-all font-sans text-[10px] uppercase tracking-widest shadow-sm"
                                     >
                                         <Edit size={14} />
                                         Edit

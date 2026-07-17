@@ -25,11 +25,11 @@ export default async function UsersAdmin() {
         <div className="max-w-5xl mx-auto space-y-10">
             <div className="flex items-center justify-between border-b border-brand-border pb-4">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white border border-brand-border flex items-center justify-center text-brand-accent shadow-sm">
+                    <div className="w-12 h-12 bg-brand-panel border border-brand-border flex items-center justify-center text-brand-accent shadow-sm">
                         <User size={24} />
                     </div>
                     <div>
-                        <h1 className="font-oswald text-3xl uppercase tracking-widest text-brand-text">
+                        <h1 className="text-3xl text-brand-text fancy-text">
                             Users & Access
                         </h1>
                         <p className="text-[10px] text-brand-muted uppercase tracking-widest mt-1">Role Management System</p>
@@ -41,21 +41,21 @@ export default async function UsersAdmin() {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse min-w-[800px]">
                         <thead>
-                            <tr className="border-b border-brand-border bg-brand-light/50">
-                                <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted">Email Address</th>
-                                <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted text-center">Role</th>
-                                <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted text-center">Approved</th>
-                                <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted">Joined On</th>
-                                <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted text-right pr-8">Actions</th>
+                            <tr className="border-b border-brand-border bg-[#1a1a1a]/50">
+                                <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted">Email Address</th>
+                                <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-center">Role</th>
+                                <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-center">Approved</th>
+                                <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted">Joined On</th>
+                                <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-right pr-8">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-brand-border">
                             {allUsers.map((u: PrismaUser) => (
-                                <tr key={u.id} className="hover:bg-brand-light/20 transition-colors group">
-                                    <td className="p-4 font-inter text-sm text-brand-text font-medium">
+                                <tr key={u.id} className="hover:bg-[#1a1a1a]/20 transition-colors group">
+                                    <td className="p-4 font-sans text-sm text-brand-text font-medium">
                                         {u.email}
                                         {u.email === email && (
-                                            <span className="ml-2 text-[10px] bg-brand-accent/10 text-brand-accent px-1.5 py-0.5 rounded uppercase font-oswald">You</span>
+                                            <span className="ml-2 text-[10px] bg-brand-accent/10 text-brand-accent px-1.5 py-0.5 rounded uppercase font-sans">You</span>
                                         )}
                                     </td>
                                     <td className="p-4 text-center">
@@ -82,7 +82,7 @@ export default async function UsersAdmin() {
                                             </span>
                                         )}
                                     </td>
-                                    <td className="p-4 text-xs text-brand-muted font-inter">
+                                    <td className="p-4 text-xs text-brand-muted font-sans">
                                         {new Date(u.createdAt).toLocaleDateString('en-IN', {
                                             day: '2-digit', month: 'short', year: 'numeric'
                                         })}
@@ -97,7 +97,7 @@ export default async function UsersAdmin() {
                                                         <input type="hidden" name="currentRole" value={u.role} />
                                                         <button
                                                             type="submit"
-                                                            className="text-[10px] font-oswald uppercase tracking-widest text-brand-muted hover:text-brand-accent border border-transparent hover:border-brand-accent/20 px-2 py-1 transition-all"
+                                                            className="text-[10px] font-sans uppercase tracking-widest border hover:border-brand-accent/20 px-2 py-1 transition-all btn-glass-secondary rounded-full text-white"
                                                         >
                                                             Switch to {u.role === 'ADMIN' ? 'Editor' : 'Admin'}
                                                         </button>
@@ -109,11 +109,10 @@ export default async function UsersAdmin() {
                                                         <input type="hidden" name="currentStatus" value={String(u.isApproved)} />
                                                         <button
                                                             type="submit"
-                                                            className={cn(
-                                                                "px-3 py-1.5 text-[10px] font-oswald uppercase tracking-widest transition-all",
+                                                            className={cn("btn-glass-secondary rounded-full font-sans text-white px-4 py-2 text-[10px] uppercase tracking-widest transition-all",
                                                                 u.isApproved
-                                                                    ? "text-brand-muted hover:text-red-600 border border-brand-border hover:border-red-200"
-                                                                    : "bg-brand-accent text-white hover:bg-brand-accent/90 shadow-sm"
+                                                                    ? "hover:text-red-600 hover:border-red-200"
+                                                                    : "bg-brand-accent hover:bg-brand-accent/90"
                                                             )}
                                                         >
                                                             {u.isApproved ? 'Revoke' : 'Approve'}
@@ -130,11 +129,11 @@ export default async function UsersAdmin() {
                 </div>
             </div>
 
-            <div className="bg-brand-light/50 border border-dashed border-brand-border p-6 text-sm text-brand-muted">
-                <p className="font-oswald uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
+            <div className="bg-[#1a1a1a]/50 border border-dashed border-brand-border p-6 text-sm text-brand-muted">
+                <p className="font-sans uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
                     <ShieldAlert size={16} className="text-brand-accent" /> Security Notice
                 </p>
-                <p className="font-inter">
+                <p className="font-sans">
                     Changes to user status and roles take effect immediately. Denying approval will restrict the user's access to all admin routes.
                     Be careful when granting **Admin** role, as it allows full system access including deleting data and managing other users.
                 </p>

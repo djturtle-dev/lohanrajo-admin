@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Oswald, Inter } from "next/font/google";
+import { Oswald, Cormorant_Garamond, Poppins, Forum } from "next/font/google";
 import "./globals.css";
 import ClarityScript from "@/components/admin/ClarityScript";
+import AnimatedBackground from "@/components/admin/AnimatedBackground";
 
 const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500", "600", "700"], style: ['normal', 'italic'], variable: "--font-cormorant" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-poppins" });
+const forum = Forum({ subsets: ["latin"], weight: ["400"], variable: "--font-forum" });
 
 export const metadata: Metadata = {
     title: "Lohanrajo Admin",
@@ -17,10 +20,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${inter.variable} ${oswald.variable}`} suppressHydrationWarning>
-            <body className="font-sans text-brand-text min-h-screen">
+        <html lang="en" className={`${oswald.variable} ${cormorant.variable} ${poppins.variable} ${forum.variable}`} suppressHydrationWarning>
+            <body className="font-sans bg-brand-bg text-brand-text min-h-screen selection:bg-brand-accent selection:text-brand-bg" suppressHydrationWarning>
+                <AnimatedBackground />
                 <ClarityScript />
-                {children}
+                <div className="relative z-10 flex flex-col min-h-screen">
+                    {children}
+                </div>
             </body>
         </html>
     );

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
     Menu, X, LayoutDashboard, Package, Star,
-    UserCheck, FolderTree, Users
+    UserCheck, FolderTree, Users, Mail
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SignOutButton from './SignOutButton';
@@ -28,7 +28,7 @@ function SidebarLink({ href, icon: Icon, children, onClick, className }: Sidebar
             href={href}
             onClick={onClick}
             className={cn(
-                "flex items-center px-6 py-3 transition-colors text-sm tracking-widest uppercase font-oswald",
+                "flex items-center px-6 py-3 transition-colors text-sm fancy-text",
                 isActive
                     ? "bg-brand-panel text-brand-accent border-r-2 border-brand-accent"
                     : "text-brand-muted hover:bg-brand-panel hover:text-brand-accent",
@@ -56,6 +56,7 @@ export default function SidebarClient({ children, role, user }: {
     const links = [
         { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
         ...(role === 'ADMIN' ? [{ href: '/admin/users', icon: Users, label: 'Manage Editors' }] : []),
+        { href: '/admin/messages', icon: Mail, label: 'Messages', className: "border-t border-brand-border mt-4 pt-4" },
         { href: '/admin/products', icon: Package, label: 'Products', className: "border-t border-brand-border mt-4 pt-4" },
         { href: '/admin/categories', icon: FolderTree, label: 'Categories' },
         { href: '/admin/testimonials', icon: Star, label: 'Testimonials' },
@@ -66,7 +67,7 @@ export default function SidebarClient({ children, role, user }: {
     return (
         <>
             {/* Desktop Sidebar (Left) */}
-            <aside className="w-64 border-r border-brand-border bg-white hidden md:flex flex-col shadow-sm fixed inset-y-0 left-0 z-30">
+            <aside className="w-64 border-r border-brand-border bg-brand-panel hidden md:flex flex-col shadow-sm fixed inset-y-0 left-0 z-30">
                 <div className="px-2 py-4 border-b border-brand-border flex flex-col items-center">
                     {children}
                 </div>
@@ -80,7 +81,7 @@ export default function SidebarClient({ children, role, user }: {
             </aside>
 
             {/* Mobile Header (Top) */}
-            <div className="md:hidden h-16 border-b border-brand-border bg-white flex items-center justify-between px-4 fixed top-0 w-full z-40">
+            <div className="md:hidden h-16 border-b border-brand-border bg-brand-panel flex items-center justify-between px-4 fixed top-0 w-full z-40">
                 <div className="h-10 w-24 relative">
                     {children}
                 </div>
@@ -94,12 +95,12 @@ export default function SidebarClient({ children, role, user }: {
 
             {/* Mobile Menu Overlay */}
             <div className={cn(
-                "fixed inset-0 z-30 bg-white transform transition-transform duration-300 md:hidden pt-20",
+                "fixed inset-0 z-30 bg-brand-panel transform transition-transform duration-300 md:hidden pt-20",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
-                <nav className="p-4 flex flex-col h-full bg-white">
+                <nav className="p-4 flex flex-col h-full bg-brand-panel">
                     {/* User Profile in Mobile Menu */}
-                    <div className="flex items-center gap-4 mb-8 p-4 bg-brand-light border border-brand-border">
+                    <div className="flex items-center gap-4 mb-8 p-4 bg-[#1a1a1a] border border-brand-border">
                         <div className="w-12 h-12 bg-brand-panel border border-brand-border flex items-center justify-center text-brand-accent overflow-hidden">
                             {user?.image ? (
                                 <Image src={user.image} alt={user.name || ''} width={48} height={48} className="w-full h-full object-cover" />
@@ -108,7 +109,7 @@ export default function SidebarClient({ children, role, user }: {
                             )}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="font-oswald font-bold text-brand-text uppercase tracking-tight truncate">{user?.name || 'Admin User'}</p>
+                            <p className="font-sans font-bold text-brand-text uppercase tracking-tight truncate">{user?.name || 'Admin User'}</p>
                             <p className="text-xs text-brand-muted truncate">{user?.email || user?.emailAddress || 'User@Lohanrajo.com'}</p>
                         </div>
                     </div>

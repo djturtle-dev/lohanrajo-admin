@@ -107,7 +107,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
                     <select 
                         value={filterSource} 
                         onChange={e => setFilterSource(e.target.value)}
-                        className="bg-transparent text-sm font-oswald tracking-wide uppercase focus:outline-none text-brand-text outline-none appearance-none cursor-pointer"
+                        className="bg-transparent text-sm font-sans tracking-wide uppercase focus:outline-none text-brand-text outline-none appearance-none cursor-pointer"
                     >
                         <option value="all">All Sources</option>
                         {sources.map(s => (
@@ -120,50 +120,50 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
             <div className="bg-brand-panel border border-brand-border overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[1000px]">
                     <thead>
-                        <tr className="border-b border-brand-border bg-brand-light/50">
+                        <tr className="border-b border-brand-border bg-[#1a1a1a]/50">
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('authorName')}
                             >
                                 <div className="flex items-center gap-1">Author <SortIcon field="authorName" /></div>
                             </th>
-                            <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted">Content</th>
+                            <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted">Content</th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('rating')}
                             >
                                 <div className="flex items-center gap-1">Rating <SortIcon field="rating" /></div>
                             </th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('source')}
                             >
                                 <div className="flex items-center gap-1">Source <SortIcon field="source" /></div>
                             </th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('createdAt')}
                             >
                                 <div className="flex items-center gap-1">Date <SortIcon field="createdAt" /></div>
                             </th>
                             <th 
-                                className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted text-center cursor-pointer group hover:text-brand-accent select-none"
+                                className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-center cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('featured')}
                             >
                                 <div className="flex items-center justify-center gap-1">Featured <SortIcon field="featured" /></div>
                             </th>
-                            <th className="p-4 font-oswald text-xs tracking-widest uppercase text-brand-muted text-right">Action</th>
+                            <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-brand-border">
                         {processedTestimonials.length === 0 ? (
                             <tr>
-                                <td colSpan={7} className="p-8 text-center text-brand-muted text-sm font-inter">No testimonials found matching your criteria.</td>
+                                <td colSpan={7} className="p-8 text-center text-brand-muted text-sm font-sans">No testimonials found matching your criteria.</td>
                             </tr>
                         ) : processedTestimonials.map((t) => (
-                            <tr key={t.id} className="hover:bg-brand-light/20 transition-colors group">
-                                <td className="p-4 font-inter text-sm text-brand-text font-medium">{t.authorName || 'Anonymous'}</td>
-                                <td className="p-4 font-inter text-sm text-brand-muted max-w-xs">
+                            <tr key={t.id} className="hover:bg-[#1a1a1a]/20 transition-colors group">
+                                <td className="p-4 font-sans text-sm text-brand-text font-medium">{t.authorName || 'Anonymous'}</td>
+                                <td className="p-4 font-sans text-sm text-brand-muted max-w-xs">
                                     <span className="line-clamp-2" title={t.content}>
                                         {t.content}
                                     </span>
@@ -184,7 +184,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
                                         {getSourceIcon(t.source)}
                                     </div>
                                 </td>
-                                <td className="p-4 font-inter text-sm text-brand-muted whitespace-nowrap">
+                                <td className="p-4 font-sans text-sm text-brand-muted whitespace-nowrap">
                                     {new Date(t.createdAt).toLocaleDateString('en-IN', {
                                         day: '2-digit', month: 'short', year: 'numeric'
                                     })}
@@ -193,7 +193,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
                                     <form action={toggleTestimonialFeatured}>
                                         <input type="hidden" name="id" value={t.id} />
                                         <input type="hidden" name="currentStatus" value={String(t.featured)} />
-                                        <button type="submit" className="group/heart relative">
+                                        <button type="submit" className="group/heart relative btn-glass-secondary rounded-full font-sans text-white px-4 py-2 text-xs uppercase tracking-widest">
                                             <Heart 
                                                 size={20} 
                                                 className={`${t.featured ? 'fill-red-500 text-red-500' : 'text-brand-border group-hover/heart:text-red-300'} transition-all`}
@@ -204,7 +204,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
                                 <td className="p-4 text-right">
                                     <button 
                                         onClick={() => setSelectedTestimonial(t)}
-                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-light border border-brand-border text-brand-text hover:bg-brand-border transition-all font-oswald text-[10px] uppercase tracking-widest"
+                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] border border-brand-border text-brand-text hover:bg-brand-border transition-all font-sans text-[10px] uppercase tracking-widest"
                                     >
                                         <Edit size={14} />
                                         Edit

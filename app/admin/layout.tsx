@@ -47,18 +47,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     // If not approved, show pending screen
     if (!dbUser.isApproved) {
         return (
-            <div className="min-h-screen bg-brand-light flex items-center justify-center p-4">
-                <div className="max-w-md w-full bg-white border border-brand-border p-8 text-center space-y-6 shadow-xl">
+            <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center p-4">
+                <div className="max-w-md w-full bg-brand-panel border border-brand-border p-8 text-center space-y-6 shadow-xl">
                     <div className="w-16 h-16 bg-brand-panel mx-auto flex items-center justify-center text-brand-accent rounded-full border border-brand-border">
                         <User size={32} />
                     </div>
                     <div className="space-y-2">
-                        <h1 className="font-oswald text-2xl uppercase tracking-widest text-brand-text">Approval Pending</h1>
-                        <p className="text-sm text-brand-muted font-inter">
+                        <h1 className="text-2xl text-brand-text fancy-text">Approval Pending</h1>
+                        <p className="text-sm text-brand-muted font-sans">
                             Your account (<span className="font-bold text-brand-text">{email}</span>) is pending admin approval.
                         </p>
                     </div>
-                    <div className="p-4 bg-brand-light/50 border border-brand-border text-xs text-brand-muted font-inter italic">
+                    <div className="p-4 bg-[#1a1a1a]/50 border border-brand-border text-xs text-brand-muted font-sans italic">
                         Once approved, you will have access to the management portal.
                     </div>
                     <div className="pt-4 border-t border-brand-border">
@@ -94,9 +94,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col min-w-0 md:ml-64 pt-16 md:pt-0">
                 {/* Top Desktop Header */}
-                <div className="h-24 border-b border-brand-border hidden md:flex items-center justify-between px-8 bg-white shadow-sm sticky top-0 z-20">
+                <div className="h-24 border-b border-brand-border hidden md:flex items-center justify-between px-8 bg-brand-panel shadow-sm sticky top-0 z-20">
                     <div>
-                        <h1 className="font-oswald tracking-widest uppercase text-brand-text font-bold text-xl">Admin Portal</h1>
+                        <h1 className="text-brand-text text-xl fancy-text">Admin Portal</h1>
                         <p className="text-[10px] text-brand-muted uppercase tracking-[0.2em]">Management System</p>
                     </div>
 
@@ -105,7 +105,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                             href={process.env.NEXT_PUBLIC_MAIN_SITE_URL || 'http://localhost:3000'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-[10px] font-oswald tracking-widest uppercase text-brand-muted hover:text-brand-accent transition-colors border border-brand-border px-3 py-1.5 rounded"
+                            className="flex items-center gap-2 text-[10px] font-sans tracking-widest uppercase text-brand-muted hover:text-brand-accent transition-colors border border-brand-border px-3 py-1.5 rounded"
                         >
                             <ExternalLink size={12} /> View Live Site
                         </a>

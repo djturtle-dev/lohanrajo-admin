@@ -33,10 +33,8 @@ const MenuButton = ({
         onClick={onClick}
         disabled={disabled}
         title={title}
-        className={`p-2 transition-colors ${
-            isActive 
-                ? 'bg-brand-accent text-white' 
-                : 'text-brand-muted hover:bg-brand-border/20'
+        className={`p-2 transition-colors rounded-full ${ isActive ? 'bg-brand-accent text-white' 
+                : 'text-brand-muted hover:bg-white/10 btn-glass-secondary'
         } ${disabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
     >
         {children}
@@ -77,7 +75,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
         },
         editorProps: {
             attributes: {
-                class: 'prose prose-sm max-w-none focus:outline-none min-h-[200px] p-4 text-brand-text font-inter',
+                class: 'prose prose-sm max-w-none focus:outline-none min-h-[200px] p-4 text-brand-text font-sans',
             },
         },
     })
@@ -99,7 +97,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
 
     return (
         <div className="border border-brand-border bg-brand-panel overflow-hidden transition-all focus-within:border-brand-accent">
-            <div className="flex flex-wrap items-center border-b border-brand-border bg-white px-1 py-1">
+            <div className="flex flex-wrap items-center border-b border-brand-border bg-brand-panel px-1 py-1">
                 <MenuButton
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     isActive={editor.isActive('bold')}

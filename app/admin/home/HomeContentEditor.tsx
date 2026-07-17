@@ -45,14 +45,14 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
     return (
         <div className="space-y-12">
             {/* HEROLINES */}
-            <section className="bg-white border border-brand-border p-8 relative">
+            <section className="bg-brand-panel border border-brand-border p-8 relative">
                 <div className="flex items-center justify-between mb-6">
                     <div>
-                        <h2 className="font-oswald text-2xl uppercase tracking-widest text-brand-text flex items-center gap-2">
+                        <h2 className="text-2xl text-brand-text flex items-center gap-2 fancy-text">
                             Animated Hero Lines
                         </h2>
                         <p className="text-sm text-brand-muted mt-1 flex items-center gap-1">
-                            <Info size={14} /> Wrap text in asterisks to highlight in red, e.g., <code className="bg-brand-light px-1">*Metal Arts*</code>
+                            <Info size={14} /> Wrap text in asterisks to highlight in red, e.g., <code className="bg-[#1a1a1a] px-1">*Metal Arts*</code>
                         </p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
                             </div>
                             <textarea
                                 rows={2}
-                                className="flex-1 px-4 py-2 border border-brand-border text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/50 font-inter resize-none"
+                                className="flex-1 px-4 py-2 border border-brand-border text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/50 font-sans resize-none rounded-2xl placeholder-brand-muted/40"
                                 value={line}
                                 onChange={(e) => updateHeroLine(index, e.target.value)}
                             />
@@ -82,7 +82,7 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
                     <button
                         type="button"
                         onClick={addHeroLine}
-                        className="flex items-center gap-2 text-sm font-oswald uppercase tracking-widest text-brand-muted hover:text-brand-accent transition mt-4 px-2"
+                        className="flex items-center gap-2 text-sm font-sans uppercase tracking-widest transition mt-4 px-2 btn-glass-secondary rounded-full text-white"
                     >
                         <Plus size={16} /> Add Line
                     </button>
@@ -90,9 +90,9 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
             </section>
 
             {/* PILLARS */}
-            <section className="bg-white border border-brand-border p-8 relative">
+            <section className="bg-brand-panel border border-brand-border p-8 relative">
                 <div className="mb-6">
-                    <h2 className="font-oswald text-2xl uppercase tracking-widest text-brand-text">
+                    <h2 className="text-2xl text-brand-text fancy-text">
                         The 3 Focus Pillars
                     </h2>
                     <p className="text-sm text-brand-muted mt-1">Displayed directly below the hero section.</p>
@@ -100,12 +100,12 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {pillars.map((pillar, index) => (
-                        <div key={index} className="p-6 border border-brand-border bg-brand-light/20 flex flex-col gap-4">
+                        <div key={index} className="p-6 border border-brand-border bg-[#1a1a1a]/20 flex flex-col gap-4">
                             <div>
-                                <label className="block text-xs font-oswald uppercase tracking-widest text-brand-muted mb-1">Lucide Icon Name</label>
+                                <label className="block text-xs font-sans uppercase tracking-widest text-brand-muted mb-1">Lucide Icon Name</label>
                                 <input
                                     type="text"
-                                    className="w-full px-3 py-2 border border-brand-border text-sm focus:outline-none focus:border-brand-accent"
+                                    className="w-full px-3 py-2 border border-brand-border text-sm focus:outline-none focus:border-brand-accent rounded-full placeholder-brand-muted/40"
                                     value={pillar.icon}
                                     placeholder="e.g. Factory, ShieldCheck"
                                     onChange={(e) => updatePillar(index, 'icon', e.target.value)}
@@ -114,19 +114,19 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
                             </div>
 
                             <div>
-                                <label className="block text-xs font-oswald uppercase tracking-widest text-brand-muted mb-1">Title</label>
+                                <label className="block text-xs font-sans uppercase tracking-widest text-brand-muted mb-1">Title</label>
                                 <input
                                     type="text"
-                                    className="w-full px-3 py-2 border border-brand-border text-sm font-oswald uppercase tracking-widest focus:outline-none focus:border-brand-accent"
+                                    className="w-full px-3 py-2 border border-brand-border text-sm font-sans uppercase tracking-widest focus:outline-none focus:border-brand-accent rounded-full placeholder-brand-muted/40"
                                     value={pillar.title}
                                     onChange={(e) => updatePillar(index, 'title', e.target.value)}
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-xs font-oswald uppercase tracking-widest text-brand-muted mb-1">Description</label>
+                                <label className="block text-xs font-sans uppercase tracking-widest text-brand-muted mb-1">Description</label>
                                 <textarea
-                                    className="w-full px-3 py-2 border border-brand-border text-sm font-inter focus:outline-none focus:border-brand-accent min-h-[100px] resize-none"
+                                    className="w-full px-3 py-2 border border-brand-border text-sm font-sans focus:outline-none focus:border-brand-accent min-h-[100px] resize-none rounded-2xl placeholder-brand-muted/40"
                                     value={pillar.desc}
                                     onChange={(e) => updatePillar(index, 'desc', e.target.value)}
                                 />
@@ -141,7 +141,7 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
                 <button
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="flex items-center gap-2 px-8 py-4 bg-brand-accent text-white font-oswald text-lg uppercase tracking-widest hover:bg-red-700 transition shadow-lg shadow-brand-accent/20 disabled:opacity-50"
+                    className="flex items-center gap-2 px-8 py-4 btn-glass-primary text-lg uppercase tracking-widest transition shadow-lg shadow-brand-accent/20 disabled:opacity-50 rounded-full font-sans"
                 >
                     <Save size={20} />
                     {isSaving ? 'Saving...' : 'Save All Changes'}

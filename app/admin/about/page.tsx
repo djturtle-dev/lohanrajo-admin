@@ -9,8 +9,8 @@ export default async function AboutAdminPage() {
     <div className="p-8 max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-8 border-b border-brand-border pb-6">
         <div>
-          <h1 className="font-oswald text-4xl uppercase tracking-tighter text-brand-text">Edit About Page</h1>
-          <p className="text-brand-muted font-inter">Manage the core narrative of Lohan Rajo Metal Arts.</p>
+          <h1 className="text-4xl text-brand-text fancy-text">Edit About Page</h1>
+          <p className="text-brand-muted font-sans">Manage the core narrative of Lohan Rajo Metal Arts.</p>
         </div>
       </div>
 

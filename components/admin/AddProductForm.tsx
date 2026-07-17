@@ -68,18 +68,18 @@ export default function AddProductForm({ categories }: { categories: Category[] 
     return (
         <form ref={formRef} action={handleAdd} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted block">Product Name *</label>
+                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted block">Product Name *</label>
                 <input
                     required
                     type="text"
                     name="name"
                     placeholder="e.g. Stainless Steel IP65 Enclosure"
-                    className="w-full bg-brand-panel border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors"
+                    className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors rounded-full placeholder-brand-muted/40"
                 />
             </div>
 
             <div className="space-y-2">
-                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted block">Category *</label>
+                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted block">Category *</label>
                 <select
                     name="categoryId"
                     required
@@ -95,11 +95,11 @@ export default function AddProductForm({ categories }: { categories: Category[] 
             </div>
 
             <div className="space-y-2">
-                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted block">Sub-Category</label>
+                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted block">Sub-Category</label>
                 <select
                     name="subCategoryId"
                     disabled={!selectedCategoryId}
-                    className="w-full bg-brand-panel border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none disabled:opacity-50"
+                    className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none disabled:opacity-50 rounded-full placeholder-brand-muted/40"
                 >
                     <option value="">Select a sub-category</option>
                     {currentCategory?.subCategories.map(s => (
@@ -109,7 +109,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
             </div>
 
             <div className="space-y-2 md:col-span-2">
-                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted block">Description *</label>
+                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted block">Description *</label>
                 <RichTextEditor 
                     content={description} 
                     onChange={setDescription} 
@@ -119,10 +119,10 @@ export default function AddProductForm({ categories }: { categories: Category[] 
             </div>
 
             <div className="space-y-2 md:col-span-2">
-                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted block">Product Images</label>
+                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted block">Product Images</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-4">
                     {previews.map((src, i) => (
-                        <div key={i} className="aspect-square relative border border-brand-border bg-white p-1">
+                        <div key={i} className="aspect-square relative border border-brand-border bg-brand-panel p-1">
                             <img src={src} alt="Preview" className="w-full h-full object-cover" />
                             <button 
                                 type="button"
@@ -135,13 +135,13 @@ export default function AddProductForm({ categories }: { categories: Category[] 
                     ))}
                     <label className="aspect-square border-2 border-dashed border-brand-border flex flex-col items-center justify-center cursor-pointer hover:border-brand-accent hover:bg-brand-panel transition-all text-brand-muted hover:text-brand-accent">
                         <ImageIcon size={24} className="mb-2" />
-                        <span className="text-[10px] uppercase tracking-widest font-oswald">Add Image</span>
+                        <span className="text-[10px] uppercase tracking-widest font-sans">Add Image</span>
                         <input 
                             type="file" 
                             name="images" 
                             multiple 
                             accept="image/*" 
-                            className="hidden" 
+                            className="hidden rounded-full placeholder-brand-muted/40" 
                             onChange={handleImageChange}
                         />
                     </label>
@@ -151,7 +151,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
             <div className="md:col-span-2">
                 <button
                     type="submit"
-                    className="bg-brand-accent text-brand-white px-8 py-3 font-oswald font-bold tracking-widest uppercase hover:bg-red-700 transition-colors"
+                    className="bg-brand-accent text-brand-white px-8 py-3 font-sans font-bold tracking-widest uppercase hover:bg-red-700 transition-colors btn-glass-secondary rounded-full text-white"
                 >
                     Add Product
                 </button>

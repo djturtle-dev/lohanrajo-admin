@@ -112,32 +112,32 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
             {!isCreatingCat ? (
                 <button
                     onClick={() => setIsCreatingCat(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-brand-accent text-white font-oswald text-sm uppercase tracking-widest hover:bg-red-700 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-brand-accent text-white font-sans text-sm uppercase tracking-widest hover:bg-red-700 transition-colors"
                 >
                     <Plus size={16} /> New Category
                 </button>
             ) : (
-                <form onSubmit={handleCreateCategory} className="flex items-center gap-2 p-4 border border-brand-border bg-brand-light/30">
+                <form onSubmit={handleCreateCategory} className="flex items-center gap-2 p-4 border border-brand-border bg-[#1a1a1a]/30">
                     <input
                         autoFocus
                         type="text"
                         placeholder="Category Name"
                         value={newValue}
                         onChange={(e) => setNewValue(e.target.value)}
-                        className="flex-1 px-3 py-2 border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/50"
+                        className="flex-1 px-3 py-2 border border-brand-border bg-brand-panel text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/50"
                         required
                     />
-                    <button type="submit" className="px-4 py-2 bg-brand-accent text-white hover:bg-red-700 transition">
+                    <button type="submit" className="px-4 py-2 btn-glass-primary transition rounded-full font-sans">
                         <Save size={16} />
                     </button>
-                    <button type="button" onClick={() => { setIsCreatingCat(false); setNewValue(''); }} className="px-4 py-2 bg-white border border-brand-border text-brand-muted hover:bg-gray-50 transition">
+                    <button type="button" onClick={() => { setIsCreatingCat(false); setNewValue(''); }} className="px-4 py-2 bg-brand-panel border border-brand-border text-brand-muted hover:bg-gray-50 transition">
                         <X size={16} />
                     </button>
                 </form>
             )}
 
             {/* List */}
-            <div className="bg-white border border-brand-border divide-y divide-brand-border">
+            <div className="bg-brand-panel border border-brand-border divide-y divide-brand-border">
                 {categories.length === 0 && (
                     <div className="p-12 text-center text-brand-muted">
                         No categories found. Create one to get started.
@@ -147,7 +147,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                 {categories.map((cat) => (
                     <div key={cat.id} className="flex flex-col">
                         {/* Category Row */}
-                        <div className="flex items-center justify-between p-4 bg-brand-light/10 hover:bg-brand-light/30 transition-colors">
+                        <div className="flex items-center justify-between p-4 bg-[#1a1a1a]/10 hover:bg-[#1a1a1a]/30 transition-colors">
                             <div className="flex items-center gap-3">
                                 <button onClick={() => toggleExpand(cat.id)} className="text-brand-muted hover:text-brand-accent p-1">
                                     {expandedCats[cat.id] ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
@@ -161,13 +161,13 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                                             type="text"
                                             value={editValue}
                                             onChange={(e) => setEditValue(e.target.value)}
-                                            className="px-2 py-1 border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-accent"
+                                            className="px-2 py-1 border border-brand-border bg-brand-panel text-sm focus:outline-none focus:border-brand-accent"
                                         />
-                                        <button type="submit" className="text-green-600 p-1 hover:bg-green-50 rounded"><Save size={14} /></button>
+                                        <button type="submit" className="p-2 rounded btn-glass-secondary rounded-full font-sans text-white"><Save size={14} /></button>
                                         <button type="button" onClick={() => setEditingCatId(null)} className="text-brand-muted p-1 hover:bg-gray-50 rounded"><X size={14} /></button>
                                     </form>
                                 ) : (
-                                    <span className="font-oswald text-lg tracking-wide uppercase text-brand-text">
+                                    <span className="font-sans text-lg tracking-wide uppercase text-brand-text">
                                         {cat.name}
                                     </span>
                                 )}
@@ -175,7 +175,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
 
                             <div className="flex items-center gap-2">
                                 <span className="text-xs text-brand-muted mr-4">{cat.subCategories.length} sub, {cat._count.products} prod</span>
-                                <button onClick={() => { setCreatingSubForCatId(cat.id); setNewValue(''); setExpandedCats(prev => ({ ...prev, [cat.id]: true })); }} className="p-1.5 text-brand-muted hover:text-brand-accent hover:bg-brand-light transition" title="Add Subcategory"><Plus size={16} /></button>
+                                <button onClick={() => { setCreatingSubForCatId(cat.id); setNewValue(''); setExpandedCats(prev => ({ ...prev, [cat.id]: true })); }} className="p-1.5 text-brand-muted hover:text-brand-accent hover:bg-[#1a1a1a] transition" title="Add Subcategory"><Plus size={16} /></button>
                                 <button onClick={() => { setEditingCatId(cat.id); setEditValue(cat.name); }} className="p-1.5 text-brand-muted hover:text-blue-600 hover:bg-blue-50 transition" title="Edit Category"><Edit2 size={16} /></button>
                                 <button onClick={() => handleDeleteCategory(cat.id)} className="p-1.5 text-brand-muted hover:text-red-600 hover:bg-red-50 transition" title="Delete Category"><Trash2 size={16} /></button>
                             </div>
@@ -183,12 +183,12 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
 
                         {/* Subcategories (if expanded) */}
                         {expandedCats[cat.id] && (
-                            <div className="bg-white border-t border-brand-border/50 divide-y divide-brand-border/30 pl-12 pr-4 py-2 space-y-1">
+                            <div className="bg-brand-panel border-t border-brand-border/50 divide-y divide-brand-border/30 pl-12 pr-4 py-2 space-y-1">
                                 {cat.subCategories.length === 0 && !creatingSubForCatId ? (
                                     <div className="text-sm text-brand-muted italic py-2 px-4">No subcategories</div>
                                 ) : (
                                     cat.subCategories.map((sub: any) => (
-                                        <div key={sub.id} className="flex items-center justify-between p-3 rounded hover:bg-brand-light/20 transition-colors">
+                                        <div key={sub.id} className="flex items-center justify-between p-3 rounded hover:bg-[#1a1a1a]/20 transition-colors">
                                             <div className="flex items-center gap-3">
                                                 <Folder size={16} className="text-brand-muted" />
                                                 
@@ -199,13 +199,13 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                                                             type="text"
                                                             value={editValue}
                                                             onChange={(e) => setEditValue(e.target.value)}
-                                                            className="px-2 py-1 border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-accent"
+                                                            className="px-2 py-1 border border-brand-border bg-brand-panel text-sm focus:outline-none focus:border-brand-accent"
                                                         />
-                                                        <button type="submit" className="text-green-600 p-1 hover:bg-green-50 rounded"><Save size={14} /></button>
+                                                        <button type="submit" className="p-2 rounded btn-glass-secondary rounded-full font-sans text-white"><Save size={14} /></button>
                                                         <button type="button" onClick={() => setEditingSubId(null)} className="text-brand-muted p-1 hover:bg-gray-50 rounded"><X size={14} /></button>
                                                     </form>
                                                 ) : (
-                                                    <span className="font-oswald text-sm tracking-wide uppercase text-brand-text">
+                                                    <span className="font-sans text-sm tracking-wide uppercase text-brand-text">
                                                         {sub.name}
                                                     </span>
                                                 )}
@@ -221,20 +221,20 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
 
                                 {/* Create Subcategory Form */}
                                 {creatingSubForCatId === cat.id && (
-                                    <form onSubmit={(e) => handleCreateSubCategory(e, cat.id)} className="flex items-center gap-2 p-3 mt-2 border border-brand-accent/20 bg-brand-light/30 rounded">
+                                    <form onSubmit={(e) => handleCreateSubCategory(e, cat.id)} className="flex items-center gap-2 p-3 mt-2 border border-brand-accent/20 bg-[#1a1a1a]/30 rounded">
                                         <input
                                             autoFocus
                                             type="text"
                                             placeholder="Subcategory Name"
                                             value={newValue}
                                             onChange={(e) => setNewValue(e.target.value)}
-                                            className="flex-1 px-2 py-1 border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-accent"
+                                            className="flex-1 px-2 py-1 border border-brand-border bg-brand-panel text-sm focus:outline-none focus:border-brand-accent"
                                             required
                                         />
-                                        <button type="submit" className="px-3 py-1 bg-brand-accent text-white hover:bg-red-700 transition text-xs font-oswald uppercase tracking-widest">
+                                        <button type="submit" className="px-3 py-1 btn-glass-primary transition text-xs uppercase tracking-widest rounded-full font-sans">
                                             Save
                                         </button>
-                                        <button type="button" onClick={() => { setCreatingSubForCatId(null); setNewValue(''); }} className="px-3 py-1 bg-white border border-brand-border text-brand-muted hover:bg-gray-50 transition text-xs font-oswald uppercase tracking-widest">
+                                        <button type="button" onClick={() => { setCreatingSubForCatId(null); setNewValue(''); }} className="px-3 py-1 bg-brand-panel border border-brand-border text-brand-muted hover:bg-gray-50 transition text-xs font-sans uppercase tracking-widest">
                                             Cancel
                                         </button>
                                     </form>

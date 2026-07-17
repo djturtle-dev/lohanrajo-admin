@@ -80,3 +80,16 @@ model HomeContent {
   updatedAt DateTime @updatedAt
 }
 
+model ContactSubmission {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  phone     String
+  email     String
+  type      String   // ENQUIRY, CONTACT, CAREER, SUPPORT
+  content   String   @db.Text
+  cvUrl     String?  // Nullable, only populated for CAREER with a CV
+  createdAt DateTime @default(now())
+  isRead    Boolean  @default(false)
+}
+

@@ -52,7 +52,7 @@ export default function ClarityMetrics() {
     if (!metrics) {
         return (
             <div className="bg-brand-white border border-brand-border p-6">
-                <h3 className="font-oswald text-lg uppercase tracking-widest text-brand-text mb-4">Clarity Analytics</h3>
+                <h3 className="font-sans text-lg uppercase tracking-widest text-brand-text mb-4">Clarity Analytics</h3>
                 <p className="text-brand-muted text-sm">Clarity project ID is not configured. Add NEXT_PUBLIC_CLARITY_PROJECT_ID to your environment variables.</p>
             </div>
         );
@@ -61,7 +61,7 @@ export default function ClarityMetrics() {
     return (
         <div className="bg-brand-white border border-brand-border p-6">
             <div className="flex items-center justify-between mb-6">
-                <h3 className="font-oswald text-lg uppercase tracking-widest text-brand-text">Clarity Analytics</h3>
+                <h3 className="font-sans text-lg uppercase tracking-widest text-brand-text">Clarity Analytics</h3>
                 <BarChart3 className="text-brand-accent h-5 w-5" />
             </div>
 

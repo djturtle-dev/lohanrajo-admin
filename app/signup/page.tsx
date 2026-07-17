@@ -38,11 +38,11 @@ export default function SignUpPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-brand-dark px-4">
-            <div className="max-w-md w-full bg-white border border-brand-border p-8 shadow-sm">
+            <div className="max-w-md w-full bg-brand-panel border border-brand-border p-8 shadow-sm">
                 <div className="flex justify-center mb-6 text-brand-accent">
                     <UserPlus size={48} strokeWidth={1} />
                 </div>
-                <h1 className="text-3xl font-oswald tracking-widest uppercase text-brand-text text-center mb-2">
+                <h1 className="text-3xl text-brand-text text-center mb-2 fancy-text">
                     Create Admin
                 </h1>
                 <p className="text-center text-brand-muted text-sm font-light mb-8">
@@ -57,7 +57,7 @@ export default function SignUpPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-oswald tracking-widest uppercase text-brand-text mb-2">
+                        <label className="block text-sm font-sans tracking-widest uppercase text-brand-text mb-2">
                             Email Address
                         </label>
                         <input
@@ -65,11 +65,11 @@ export default function SignUpPage() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-3 border border-brand-border bg-brand-panel focus:outline-none focus:border-brand-accent transition-colors"
+                            className="w-full px-4 py-3 border border-brand-border bg-[#1d1d1d] focus:outline-none focus:border-brand-accent transition-colors rounded-full placeholder-brand-muted/40 font-sans"
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-oswald tracking-widest uppercase text-brand-text mb-2">
+                        <label className="block text-sm font-sans tracking-widest uppercase text-brand-text mb-2">
                             Password
                         </label>
                         <input
@@ -77,22 +77,27 @@ export default function SignUpPage() {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-3 border border-brand-border bg-brand-panel focus:outline-none focus:border-brand-accent transition-colors"
+                            className="w-full px-4 py-3 border border-brand-border bg-[#1d1d1d] focus:outline-none focus:border-brand-accent transition-colors rounded-full placeholder-brand-muted/40 font-sans"
                         />
                     </div>
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-brand-accent text-white font-oswald uppercase tracking-widest py-4 hover:bg-red-700 transition-colors flex items-center justify-center disabled:opacity-50"
+                        className="w-full btn-glass-primary uppercase tracking-[0.2em] py-5 font-bold flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed rounded-full font-sans group transition-all duration-500"
                     >
-                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Sign Up'}
+                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
+                            <>
+                                Create Account
+                                <div className="w-2 h-2 rounded-full bg-white/60 group-hover:bg-green-500 transition-colors" />
+                            </>
+                        )}
                     </button>
 
                     <div className="text-center mt-4">
                         <Link
                             href="/login"
-                            className="text-xs text-brand-muted hover:text-brand-accent font-oswald tracking-widest uppercase transition-colors"
+                            className="text-xs text-brand-muted hover:text-brand-accent font-sans tracking-widest uppercase transition-colors"
                         >
                             Already have an account? Sign In
                         </Link>
