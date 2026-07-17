@@ -25,7 +25,13 @@ export async function addProduct(formData: FormData) {
   if (!name || !categoryId || !description) return;
 
   const imageUrls: string[] = [];
-  const isNetlify = !!process.env.NETLIFY;
+  const isNetlify = !!(
+    process.env.NETLIFY || 
+    process.env.NETLIFY_BLOBS_CONTEXT || 
+    process.env.NETLIFY_IMAGES_CDN_DOMAIN || 
+    process.env.SITE_NAME
+  );
+  const useBlobs = isNetlify || (!!process.env.NETLIFY_SITE_ID && !!process.env.NETLIFY_AUTH_TOKEN);
 
   for (const file of imageFiles) {
     if (file.size > 0) {
@@ -33,7 +39,7 @@ export async function addProduct(formData: FormData) {
       const filename = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
       
       try {
-        if (!isNetlify && !(process.env.NETLIFY_SITE_ID && process.env.NETLIFY_AUTH_TOKEN)) {
+        if (!useBlobs) {
           throw new Error('Missing Netlify environment');
         }
         
@@ -43,6 +49,11 @@ export async function addProduct(formData: FormData) {
         });
         imageUrls.push(`/api/blobs/${filename}?store=products`);
       } catch (err) {
+        if (isNetlify) {
+          console.error('Netlify Blobs upload failed in production:', err);
+          throw new Error(`Netlify Blobs upload failed: ${err instanceof Error ? err.message : String(err)}`);
+        }
+
         // Fallback to local storage in development
         console.warn('Netlify Blobs upload failed, using local storage fallback:', err);
         const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'products');
@@ -104,7 +115,13 @@ export async function updateProduct(formData: FormData) {
   if (!id || !name || !categoryId || !description) return;
 
   const imageUrls: string[] = [...existingImages];
-  const isNetlify = !!process.env.NETLIFY;
+  const isNetlify = !!(
+    process.env.NETLIFY || 
+    process.env.NETLIFY_BLOBS_CONTEXT || 
+    process.env.NETLIFY_IMAGES_CDN_DOMAIN || 
+    process.env.SITE_NAME
+  );
+  const useBlobs = isNetlify || (!!process.env.NETLIFY_SITE_ID && !!process.env.NETLIFY_AUTH_TOKEN);
 
   for (const file of newImageFiles) {
     if (file.size > 0) {
@@ -112,7 +129,7 @@ export async function updateProduct(formData: FormData) {
       const filename = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
       
       try {
-        if (!isNetlify && !(process.env.NETLIFY_SITE_ID && process.env.NETLIFY_AUTH_TOKEN)) {
+        if (!useBlobs) {
           throw new Error('Missing Netlify environment');
         }
         
@@ -122,6 +139,11 @@ export async function updateProduct(formData: FormData) {
         });
         imageUrls.push(`/api/blobs/${filename}?store=products`);
       } catch (err) {
+        if (isNetlify) {
+          console.error('Netlify Blobs upload failed in production:', err);
+          throw new Error(`Netlify Blobs upload failed: ${err instanceof Error ? err.message : String(err)}`);
+        }
+
         console.warn('Netlify Blobs upload failed, using local storage fallback:', err);
         const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'products');
         await fs.mkdir(uploadDir, { recursive: true });

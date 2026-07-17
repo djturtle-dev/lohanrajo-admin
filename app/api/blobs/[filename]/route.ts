@@ -10,8 +10,14 @@ export async function GET(
   const storeName = searchParams.get('store') || 'about';
   
   try {
-    const isNetlify = !!process.env.NETLIFY;
-    if (!isNetlify && !(process.env.NETLIFY_SITE_ID && process.env.NETLIFY_AUTH_TOKEN)) {
+    const isNetlify = !!(
+      process.env.NETLIFY || 
+      process.env.NETLIFY_BLOBS_CONTEXT || 
+      process.env.NETLIFY_IMAGES_CDN_DOMAIN || 
+      process.env.SITE_NAME
+    );
+    const useBlobs = isNetlify || (!!process.env.NETLIFY_SITE_ID && !!process.env.NETLIFY_AUTH_TOKEN);
+    if (!useBlobs) {
       throw new Error('Missing Netlify environment');
     }
     const store = getStore(storeName);

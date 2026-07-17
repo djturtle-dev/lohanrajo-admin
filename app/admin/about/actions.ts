@@ -84,10 +84,16 @@ export async function updateAboutContent(formData: FormData) {
       
       const buffer = await profileImageFile.arrayBuffer();
       const filename = `profile-${Date.now()}-${profileImageFile.name.replace(/\s+/g, '-')}`;
-      const isNetlify = !!process.env.NETLIFY;
+      const isNetlify = !!(
+        process.env.NETLIFY || 
+        process.env.NETLIFY_BLOBS_CONTEXT || 
+        process.env.NETLIFY_IMAGES_CDN_DOMAIN || 
+        process.env.SITE_NAME
+      );
+      const useBlobs = isNetlify || (!!process.env.NETLIFY_SITE_ID && !!process.env.NETLIFY_AUTH_TOKEN);
 
       try {
-        if (!isNetlify && !(process.env.NETLIFY_SITE_ID && process.env.NETLIFY_AUTH_TOKEN)) {
+        if (!useBlobs) {
           throw new Error('Missing Netlify environment');
         }
         const store = getStore('about');
@@ -96,6 +102,11 @@ export async function updateAboutContent(formData: FormData) {
         });
         profileImage = `/api/blobs/${filename}?store=about`;
       } catch (err) {
+        if (isNetlify) {
+          console.error('Netlify Blobs upload failed in production:', err);
+          throw new Error(`Netlify Blobs upload failed: ${err instanceof Error ? err.message : String(err)}`);
+        }
+
         console.warn('Netlify Blobs upload failed, using local storage fallback:', err);
         const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'about');
         await fs.mkdir(uploadDir, { recursive: true });
@@ -107,7 +118,7 @@ export async function updateAboutContent(formData: FormData) {
       }
     } catch (err: any) {
       console.error('Core upload error:', err);
-      // We don't throw here, we just use the existing profileImage (fallback) or error out if it was required
+      throw err;
     }
   }
 
