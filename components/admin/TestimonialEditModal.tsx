@@ -42,7 +42,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
             <div className="bg-brand-panel max-w-2xl w-full shadow-xl flex flex-col max-h-[90vh]">
                 <div className="p-6 border-b border-brand-border flex justify-between items-center">
                     <h2 className="text-xl text-brand-text fancy-text">Edit Testimonial</h2>
-                    <button onClick={onClose} className="hover: transition-colors btn-glass-secondary rounded-full font-sans text-white px-4 py-2 text-xs uppercase tracking-widest">
+ <button onClick={onClose} className="hover: transition-colors btn-glass-secondary rounded-full font-sans px-4 py-2 text-xs uppercase tracking-widest">
                         <X size={24} />
                     </button>
                 </div>
@@ -56,7 +56,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
                             <input 
                                 name="authorName" 
                                 defaultValue={testimonial.authorName || ''} 
-                                className="w-full px-4 py-3 bg-[#1d1d1d] border border-brand-border focus:border-brand-accent outline-none font-sans text-sm rounded-full placeholder-brand-muted/40"
+                                className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-accent outline-none font-sans text-sm rounded-full placeholder-brand-muted/40"
                             />
                         </div>
                         <div className="space-y-2">
@@ -64,7 +64,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
                             <select 
                                 name="rating" 
                                 defaultValue={testimonial.rating || 5}
-                                className="w-full px-4 py-3 bg-[#1d1d1d] border border-brand-border focus:border-brand-accent outline-none font-sans text-sm rounded-full placeholder-brand-muted/40"
+                                className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-accent outline-none font-sans text-sm rounded-full placeholder-brand-muted/40"
                             >
                                 {[5, 4, 3, 2, 1].map(r => (
                                     <option key={r} value={r}>{r} Stars</option>
@@ -79,7 +79,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
                             name="content" 
                             defaultValue={testimonial.content} 
                             rows={4}
-                            className="w-full px-4 py-3 bg-[#1d1d1d] border border-brand-border focus:border-brand-accent outline-none font-sans text-sm resize-none rounded-2xl placeholder-brand-muted/40"
+                            className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-accent outline-none font-sans text-sm resize-none rounded-2xl placeholder-brand-muted/40"
                         />
                     </div>
 
@@ -89,7 +89,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
                             <select 
                                 name="source" 
                                 defaultValue={testimonial.source}
-                                className="w-full px-4 py-3 bg-[#1d1d1d] border border-brand-border focus:border-brand-accent outline-none font-sans text-sm rounded-full placeholder-brand-muted/40"
+                                className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-accent outline-none font-sans text-sm rounded-full placeholder-brand-muted/40"
                             >
                                 <option value="Google">Google</option>
                                 <option value="Justdial">Justdial</option>
@@ -110,7 +110,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
                                     className="peer sr-only placeholder-brand-muted/40"
                                 />
                                 <div className="w-5 h-5 border border-brand-border peer-checked:bg-red-500 peer-checked:border-red-500 transition-all" />
-                                <div className="absolute inset-0 flex items-center justify-center text-brand-border peer-checked:text-white transition-colors">
+                                <div className="absolute inset-0 flex items-center justify-center text-brand-border peer-checked:text-brand-text transition-colors">
                                     <Heart size={12} fill="currentColor" />
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
                             type="button"
                             onClick={handleDelete}
                             disabled={isDeleting}
-                            className="flex items-center gap-2 px-4 py-2 transition-colors disabled:opacity-50 btn-glass-secondary rounded-full font-sans text-white"
+ className="flex items-center gap-2 px-4 py-2 transition-colors disabled:opacity-50 btn-glass-secondary rounded-full font-sans "
                         >
                             <Trash2 size={18} />
                             <span className="font-sans text-xs tracking-widest uppercase">Delete</span>
@@ -133,7 +133,7 @@ export default function TestimonialEditModal({ testimonial, onClose }: Props) {
                             <button 
                                 type="button" 
                                 onClick={onClose}
-                                className="px-8 py-3 btn-glass-secondary text-brand-text text-xs tracking-widest uppercase border border-brand-border transition-all rounded-full font-sans"
+ className="px-8 py-3 btn-glass-secondary text-xs tracking-widest uppercase border border-brand-border transition-all rounded-full font-sans"
                             >
                                 Cancel
                             </button>

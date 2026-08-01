@@ -40,7 +40,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
             case 'justdial':
                 return (
                     <div className="w-8 h-5 flex-shrink-0 flex items-center justify-center bg-[#005c99] rounded-sm p-0.5" title="Justdial">
-                        <span className="text-[10px] font-bold text-white tracking-tighter italic">jd</span>
+                        <span className="text-[10px] font-bold text-brand-text tracking-tighter italic">jd</span>
                     </div>
                 );
             case 'whatsapp':
@@ -120,7 +120,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
             <div className="bg-brand-panel border border-brand-border overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[1000px]">
                     <thead>
-                        <tr className="border-b border-brand-border bg-[#1a1a1a]/50">
+                        <tr className="border-b border-brand-border bg-brand-bg/50">
                             <th 
                                 className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted cursor-pointer group hover:text-brand-accent select-none"
                                 onClick={() => handleSort('authorName')}
@@ -161,7 +161,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
                                 <td colSpan={7} className="p-8 text-center text-brand-muted text-sm font-sans">No testimonials found matching your criteria.</td>
                             </tr>
                         ) : processedTestimonials.map((t) => (
-                            <tr key={t.id} className="hover:bg-[#1a1a1a]/20 transition-colors group">
+                            <tr key={t.id} className="hover:bg-brand-bg/20 transition-colors group">
                                 <td className="p-4 font-sans text-sm text-brand-text font-medium">{t.authorName || 'Anonymous'}</td>
                                 <td className="p-4 font-sans text-sm text-brand-muted max-w-xs">
                                     <span className="line-clamp-2" title={t.content}>
@@ -193,7 +193,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
                                     <form action={toggleTestimonialFeatured}>
                                         <input type="hidden" name="id" value={t.id} />
                                         <input type="hidden" name="currentStatus" value={String(t.featured)} />
-                                        <button type="submit" className="group/heart relative btn-glass-secondary rounded-full font-sans text-white px-4 py-2 text-xs uppercase tracking-widest">
+ <button type="submit" className="group/heart relative btn-glass-secondary rounded-full font-sans px-4 py-2 text-xs uppercase tracking-widest">
                                             <Heart 
                                                 size={20} 
                                                 className={`${t.featured ? 'fill-red-500 text-red-500' : 'text-brand-border group-hover/heart:text-red-300'} transition-all`}
@@ -204,7 +204,7 @@ export default function TestimonialsTable({ initialTestimonials }: { initialTest
                                 <td className="p-4 text-right">
                                     <button 
                                         onClick={() => setSelectedTestimonial(t)}
-                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] border border-brand-border text-brand-text hover:bg-brand-border transition-all font-sans text-[10px] uppercase tracking-widest"
+                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-bg border border-brand-border text-brand-text hover:bg-brand-border transition-all font-sans text-[10px] uppercase tracking-widest"
                                     >
                                         <Edit size={14} />
                                         Edit

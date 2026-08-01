@@ -117,7 +117,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                     <Plus size={16} /> New Category
                 </button>
             ) : (
-                <form onSubmit={handleCreateCategory} className="flex items-center gap-2 p-4 border border-brand-border bg-[#1a1a1a]/30">
+                <form onSubmit={handleCreateCategory} className="flex items-center gap-2 p-4 border border-brand-border bg-brand-bg/30">
                     <input
                         autoFocus
                         type="text"
@@ -147,7 +147,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                 {categories.map((cat) => (
                     <div key={cat.id} className="flex flex-col">
                         {/* Category Row */}
-                        <div className="flex items-center justify-between p-4 bg-[#1a1a1a]/10 hover:bg-[#1a1a1a]/30 transition-colors">
+                        <div className="flex items-center justify-between p-4 bg-brand-bg/10 hover:bg-brand-bg/30 transition-colors">
                             <div className="flex items-center gap-3">
                                 <button onClick={() => toggleExpand(cat.id)} className="text-brand-muted hover:text-brand-accent p-1">
                                     {expandedCats[cat.id] ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
@@ -163,7 +163,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                                             onChange={(e) => setEditValue(e.target.value)}
                                             className="px-2 py-1 border border-brand-border bg-brand-panel text-sm focus:outline-none focus:border-brand-accent"
                                         />
-                                        <button type="submit" className="p-2 rounded btn-glass-secondary rounded-full font-sans text-white"><Save size={14} /></button>
+ <button type="submit" className="p-2 rounded btn-glass-secondary rounded-full font-sans "><Save size={14} /></button>
                                         <button type="button" onClick={() => setEditingCatId(null)} className="text-brand-muted p-1 hover:bg-gray-50 rounded"><X size={14} /></button>
                                     </form>
                                 ) : (
@@ -175,7 +175,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
 
                             <div className="flex items-center gap-2">
                                 <span className="text-xs text-brand-muted mr-4">{cat.subCategories.length} sub, {cat._count.products} prod</span>
-                                <button onClick={() => { setCreatingSubForCatId(cat.id); setNewValue(''); setExpandedCats(prev => ({ ...prev, [cat.id]: true })); }} className="p-1.5 text-brand-muted hover:text-brand-accent hover:bg-[#1a1a1a] transition" title="Add Subcategory"><Plus size={16} /></button>
+                                <button onClick={() => { setCreatingSubForCatId(cat.id); setNewValue(''); setExpandedCats(prev => ({ ...prev, [cat.id]: true })); }} className="p-1.5 text-brand-muted hover:text-brand-accent hover:bg-brand-bg transition" title="Add Subcategory"><Plus size={16} /></button>
                                 <button onClick={() => { setEditingCatId(cat.id); setEditValue(cat.name); }} className="p-1.5 text-brand-muted hover:text-blue-600 hover:bg-blue-50 transition" title="Edit Category"><Edit2 size={16} /></button>
                                 <button onClick={() => handleDeleteCategory(cat.id)} className="p-1.5 text-brand-muted hover:text-red-600 hover:bg-red-50 transition" title="Delete Category"><Trash2 size={16} /></button>
                             </div>
@@ -188,7 +188,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                                     <div className="text-sm text-brand-muted italic py-2 px-4">No subcategories</div>
                                 ) : (
                                     cat.subCategories.map((sub: any) => (
-                                        <div key={sub.id} className="flex items-center justify-between p-3 rounded hover:bg-[#1a1a1a]/20 transition-colors">
+                                        <div key={sub.id} className="flex items-center justify-between p-3 rounded hover:bg-brand-bg/20 transition-colors">
                                             <div className="flex items-center gap-3">
                                                 <Folder size={16} className="text-brand-muted" />
                                                 
@@ -201,7 +201,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
                                                             onChange={(e) => setEditValue(e.target.value)}
                                                             className="px-2 py-1 border border-brand-border bg-brand-panel text-sm focus:outline-none focus:border-brand-accent"
                                                         />
-                                                        <button type="submit" className="p-2 rounded btn-glass-secondary rounded-full font-sans text-white"><Save size={14} /></button>
+ <button type="submit" className="p-2 rounded btn-glass-secondary rounded-full font-sans "><Save size={14} /></button>
                                                         <button type="button" onClick={() => setEditingSubId(null)} className="text-brand-muted p-1 hover:bg-gray-50 rounded"><X size={14} /></button>
                                                     </form>
                                                 ) : (
@@ -221,7 +221,7 @@ export default function CategoriesManager({ initialCategories }: { initialCatego
 
                                 {/* Create Subcategory Form */}
                                 {creatingSubForCatId === cat.id && (
-                                    <form onSubmit={(e) => handleCreateSubCategory(e, cat.id)} className="flex items-center gap-2 p-3 mt-2 border border-brand-accent/20 bg-[#1a1a1a]/30 rounded">
+                                    <form onSubmit={(e) => handleCreateSubCategory(e, cat.id)} className="flex items-center gap-2 p-3 mt-2 border border-brand-accent/20 bg-brand-bg/30 rounded">
                                         <input
                                             autoFocus
                                             type="text"

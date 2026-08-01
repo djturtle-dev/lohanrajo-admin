@@ -14,7 +14,8 @@ export async function getAboutContent() {
   if (p.aboutContent) {
     try {
       content = await p.aboutContent.findUnique({
-        where: { id: 'singleton' }
+        where: { id: 'singleton' },
+        include: { infrastructureCards: true }
       });
     } catch (e) {
       console.warn("Database schema mismatch or fetch error. Falling back to defaults.", e);
@@ -32,6 +33,7 @@ export async function getAboutContent() {
     accreditationContent: 'We operate under stringent ISO-certified quality management systems. Every enclosure and panel is tested for IP rating compliance, ensuring absolute protection against dust, water, and mechanical impact.',
     visionContent: 'To be the defining standard in industrial metal arts—pioneering solutions that integrate seamlessly with the automation and building management needs of tomorrow. We envision a future built on our resilient infrastructure.',
     founderNames: 'MR.L.L.BASKAR & L.L.SEKAR',
+    infrastructureCards: [],
   };
 
   if (!content) {
@@ -39,8 +41,18 @@ export async function getAboutContent() {
     content = await (prisma as any).aboutContent.create({
       data: {
         id: 'singleton',
-        ...defaults
-      }
+        title: defaults.title,
+        subtitle: defaults.subtitle,
+        profileContent: defaults.profileContent,
+        establishedText: defaults.establishedText,
+        accreditationContent: defaults.accreditationContent,
+        visionContent: defaults.visionContent,
+        infrastructureContent: defaults.infrastructureContent,
+        infrastructureItems: defaults.infrastructureItems,
+        profileImage: defaults.profileImage,
+        founderNames: defaults.founderNames
+      },
+      include: { infrastructureCards: true }
     });
   }
 
@@ -59,9 +71,6 @@ export async function updateAboutContent(formData: FormData) {
   const establishedText = formData.get('establishedText') as string;
   const accreditationContent = formData.get('accreditationContent') as string;
   const visionContent = formData.get('visionContent') as string;
-  const infrastructureContent = formData.get('infrastructureContent') as string;
-  const infrastructureItemsStr = formData.get('infrastructureItems') as string;
-  const infrastructureItems = infrastructureItemsStr.split('\n').map(i => i.trim()).filter(Boolean);
   
   const founderNames = formData.get('founderNames') as string || 'MR.L.L.BASKAR & L.L.SEKAR';
   
@@ -123,33 +132,18 @@ export async function updateAboutContent(formData: FormData) {
   }
 
   try {
-    await p.aboutContent.upsert({
+    await p.aboutContent.update({
       where: { id: 'singleton' },
-      update: { 
+      data: { 
         title, 
         subtitle, 
         profileContent, 
         establishedText, 
         accreditationContent, 
         visionContent, 
-        infrastructureContent, 
-        infrastructureItems,
         profileImage,
         founderNames
-      },
-      create: { 
-        id: 'singleton', 
-        title, 
-        subtitle, 
-        profileContent, 
-        establishedText, 
-        accreditationContent, 
-        visionContent, 
-        infrastructureContent, 
-        infrastructureItems,
-        profileImage,
-        founderNames
-      },
+      }
     });
 
     revalidatePath('/admin/about');
@@ -157,5 +151,65 @@ export async function updateAboutContent(formData: FormData) {
   } catch (error: any) {
     console.error("Database upsert failed:", error);
     return { success: false, error: error.message || "Failed to save content." };
+  }
+}
+
+export async function createInfrastructureCard(formData: FormData) {
+  const p = prisma as any;
+  const title = formData.get('title') as string;
+  const description = formData.get('description') as string;
+  const icon = formData.get('icon') as string;
+
+  try {
+    await p.infrastructureCard.create({
+      data: {
+        title,
+        description,
+        icon,
+        aboutContentId: 'singleton'
+      }
+    });
+    revalidatePath('/admin/about');
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to create card:", error);
+    return { success: false, error: "Failed to create card" };
+  }
+}
+
+export async function updateInfrastructureCard(id: string, formData: FormData) {
+  const p = prisma as any;
+  const title = formData.get('title') as string;
+  const description = formData.get('description') as string;
+  const icon = formData.get('icon') as string;
+
+  try {
+    await p.infrastructureCard.update({
+      where: { id },
+      data: {
+        title,
+        description,
+        icon
+      }
+    });
+    revalidatePath('/admin/about');
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to update card:", error);
+    return { success: false, error: "Failed to update card" };
+  }
+}
+
+export async function deleteInfrastructureCard(id: string) {
+  const p = prisma as any;
+  try {
+    await p.infrastructureCard.delete({
+      where: { id }
+    });
+    revalidatePath('/admin/about');
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to delete card:", error);
+    return { success: false, error: "Failed to delete card" };
   }
 }

@@ -34,7 +34,7 @@ const MenuButton = ({
         disabled={disabled}
         title={title}
         className={`p-2 transition-colors rounded-full ${ isActive ? 'bg-brand-accent text-white' 
-                : 'text-brand-muted hover:bg-white/10 btn-glass-secondary'
+ : 'text-brand-muted hover:bg-brand-border btn-glass-secondary'
         } ${disabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
     >
         {children}

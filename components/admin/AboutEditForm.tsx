@@ -79,7 +79,7 @@ export default function AboutEditForm({ content }: AboutEditFormProps) {
                         <div className="w-full md:w-1/3">
                             <label className="block text-xs font-sans uppercase tracking-widest text-brand-muted mb-1">Profile Image</label>
                             <div className="space-y-3">
-                                <div className="w-full aspect-video border border-brand-border bg-[#1a1a1a]/20 flex items-center justify-center overflow-hidden">
+                                <div className="w-full aspect-video border border-brand-border bg-brand-bg/20 flex items-center justify-center overflow-hidden">
                                     <img
                                         src={getAssetUrl(content.profileImage) || "/our company.png"}
                                         alt="Current Profile"
@@ -133,35 +133,6 @@ export default function AboutEditForm({ content }: AboutEditFormProps) {
                 </div>
             </section>
 
-            {/* Infrastructure */}
-            <section className="bg-brand-panel border border-brand-border p-8 relative">
-                <div className="mb-6">
-                    <h2 className="text-2xl text-brand-text flex items-center gap-2 fancy-text">
-                        Infrastructure
-                    </h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-xs font-sans uppercase tracking-widest text-brand-muted mb-1">Description</label>
-                        <textarea
-                            name="infrastructureContent"
-                            defaultValue={content.infrastructureContent}
-                            className="w-full px-4 py-2 border border-brand-border text-sm font-sans leading-relaxed focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/50 min-h-[120px] resize-none rounded-2xl placeholder-brand-muted/40"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-xs font-sans uppercase tracking-widest text-brand-muted mb-1">Items (One per line)</label>
-                        <textarea
-                            name="infrastructureItems"
-                            defaultValue={content.infrastructureItems?.join('\n')}
-                            className="w-full px-4 py-2 border border-brand-border text-sm font-sans leading-relaxed focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/50 min-h-[120px] resize-none rounded-2xl placeholder-brand-muted/40"
-                            placeholder="e.g. CNC Fabrication\nAutomated Assembly\nPolymer & Powder Coating"
-                            required
-                        />
-                    </div>
-                </div>
-            </section>
 
             {/* Accreditation & Vision */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -215,7 +186,7 @@ export default function AboutEditForm({ content }: AboutEditFormProps) {
                 >
                     {isPending ? (
                         <>
-                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <div className="w-4 h-4 border-2 border-brand-border border-t-white rounded-full animate-spin" />
                             Updating...
                         </>
                     ) : (

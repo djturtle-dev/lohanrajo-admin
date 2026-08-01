@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth/server';
 import { prisma } from '@/lib/prisma';
 import SignOutButton from '@/components/admin/SignOutButton';
 import SidebarClient from '@/components/admin/SidebarClient';
+import ThemeSwitcher from '@/components/admin/ThemeSwitcher';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
     let session: any = null;
@@ -47,7 +48,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     // If not approved, show pending screen
     if (!dbUser.isApproved) {
         return (
-            <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center p-4">
+            <div className="min-h-screen bg-brand-bg flex items-center justify-center p-4">
                 <div className="max-w-md w-full bg-brand-panel border border-brand-border p-8 text-center space-y-6 shadow-xl">
                     <div className="w-16 h-16 bg-brand-panel mx-auto flex items-center justify-center text-brand-accent rounded-full border border-brand-border">
                         <User size={32} />
@@ -58,7 +59,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                             Your account (<span className="font-bold text-brand-text">{email}</span>) is pending admin approval.
                         </p>
                     </div>
-                    <div className="p-4 bg-[#1a1a1a]/50 border border-brand-border text-xs text-brand-muted font-sans italic">
+                    <div className="p-4 bg-brand-bg border border-brand-border text-xs text-brand-muted font-sans italic">
                         Once approved, you will have access to the management portal.
                     </div>
                     <div className="pt-4 border-t border-brand-border">
@@ -109,6 +110,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                         >
                             <ExternalLink size={12} /> View Live Site
                         </a>
+
+                        <div className="flex items-center gap-4 pl-6 border-l border-brand-border">
+                            <ThemeSwitcher />
+                        </div>
 
                         <div className="flex items-center gap-4 pl-6 border-l border-brand-border">
                             <SignOutButton />

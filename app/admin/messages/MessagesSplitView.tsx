@@ -89,17 +89,17 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
             
             {/* LEFT PANE - MASTER LIST */}
             <div className={cn(
-                "w-full md:w-96 flex flex-col border-r border-brand-border bg-[#151515] transition-transform duration-300",
+                "w-full md:w-96 flex flex-col border-r border-brand-border bg-[var(--theme-bg)] transition-transform duration-300",
                 selectedId ? "hidden md:flex" : "flex"
             )}>
                 {/* Header */}
                 <div className="p-4 border-b border-brand-border flex items-center justify-between relative">
-                    <h2 className="text-xl fancy-text text-white">Inbox</h2>
+                    <h2 className="text-xl fancy-text text-brand-text">Inbox</h2>
                     <div className="relative">
                         <button 
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
                             className={cn("transition-colors relative p-1 rounded-md", 
-                                typeFilter || isFilterOpen ? "text-brand-accent bg-brand-accent/10" : "text-brand-muted hover:text-white"
+                                typeFilter || isFilterOpen ? "text-brand-accent bg-brand-accent/10" : "text-brand-muted hover:text-brand-text"
                             )}
                         >
                             <Filter size={18} />
@@ -111,7 +111,7 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                         {isFilterOpen && (
                             <>
                                 <div className="fixed inset-0 z-40" onClick={() => setIsFilterOpen(false)} />
-                                <div className="absolute top-10 right-0 w-48 bg-[#1d1d1d] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
+                                <div className="absolute top-10 right-0 w-48 bg-brand-bg border border-brand-border rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
                                     <div className="px-3 py-1.5 text-[10px] font-sans tracking-widest uppercase text-brand-muted mb-1">Filter by Category</div>
                                     {[null, 'ENQUIRY', 'CONTACT', 'CAREER', 'SUPPORT'].map(cat => (
                                         <button
@@ -122,7 +122,7 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                                             }}
                                             className={cn(
                                                 "w-full text-left px-4 py-2 text-sm font-sans transition-colors",
-                                                typeFilter === cat ? "bg-brand-accent/10 text-brand-accent" : "text-white hover:bg-white/5"
+                                                typeFilter === cat ? "bg-brand-accent/10 text-brand-accent" : "text-brand-text hover:bg-brand-border"
                                             )}
                                         >
                                             {cat || 'All Categories'}
@@ -143,13 +143,13 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                             placeholder="Search" 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-[#1d1d1d] border border-white/5 rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-brand-muted focus:outline-none focus:border-brand-accent/50 transition-colors"
+                            className="w-full bg-brand-bg border border-brand-border rounded-lg py-2 pl-10 pr-4 text-sm text-brand-text placeholder-brand-muted focus:outline-none focus:border-brand-accent/50 transition-colors"
                         />
                     </div>
                 </div>
 
                 {/* Tabs */}
-                <div className="flex p-2 bg-[#1a1a1a] border-b border-brand-border">
+                <div className="flex p-2 bg-brand-bg border-b border-brand-border">
                     {(['All', 'Read', 'Unread'] as FilterTab[]).map(tab => (
                         <button
                             key={tab}
@@ -157,8 +157,8 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                             className={cn(
                                 "flex-1 text-center py-1.5 text-xs font-sans tracking-wide rounded-md transition-all",
                                 filterTab === tab 
-                                    ? "bg-[#252525] text-white shadow-sm border border-white/10" 
-                                    : "text-brand-muted hover:text-white hover:bg-white/5"
+                                    ? "bg-[var(--theme-panel)] text-brand-text shadow-sm border border-brand-border" 
+                                    : "text-brand-muted hover:text-brand-text hover:bg-brand-border"
                             )}
                         >
                             {tab}
@@ -184,14 +184,14 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                                     className={cn(
                                         "p-4 cursor-pointer transition-colors relative group",
                                         selectedId === msg.id 
-                                            ? "bg-[#222222] border-l-2 border-brand-accent" 
-                                            : "hover:bg-[#1d1d1d] border-l-2 border-transparent"
+                                            ? "bg-[var(--theme-bg)] border-l-2 border-brand-accent" 
+                                            : "hover:bg-brand-bg border-l-2 border-transparent"
                                     )}
                                 >
                                     <div className="flex justify-between items-baseline mb-1">
                                         <h3 className={cn(
                                             "text-sm font-sans truncate pr-2",
-                                            !msg.isRead ? "text-white font-bold" : "text-brand-muted"
+                                            !msg.isRead ? "text-brand-text font-bold" : "text-brand-muted"
                                         )}>
                                             {msg.firstName} {msg.lastName}
                                         </h3>
@@ -205,7 +205,7 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                                         </span>
                                         <span className={cn(
                                             "text-xs font-sans uppercase tracking-widest",
-                                            !msg.isRead ? "text-white font-bold" : "text-brand-muted"
+                                            !msg.isRead ? "text-brand-text font-bold" : "text-brand-muted"
                                         )}>
                                             {msg.type}
                                         </span>
@@ -236,7 +236,7 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                             <div className="flex items-center gap-2">
                                 <button 
                                     onClick={() => setSelectedId(null)}
-                                    className="md:hidden p-2 text-brand-muted hover:text-white"
+                                    className="md:hidden p-2 text-brand-muted hover:text-brand-text"
                                 >
                                     <ArrowLeft size={18} />
                                 </button>
@@ -251,7 +251,7 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                                 <button 
                                     onClick={() => handleToggleRead(selectedMessage.id, selectedMessage.isRead)}
                                     title={selectedMessage.isRead ? "Mark as Unread" : "Mark as Read"}
-                                    className="p-2 text-brand-muted hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                                    className="p-2 text-brand-muted hover:text-brand-text transition-colors rounded-lg hover:bg-brand-border"
                                 >
                                     {selectedMessage.isRead ? <Mail size={18} /> : <MailOpen size={18} />}
                                 </button>
@@ -267,16 +267,16 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                             {/* Header Info */}
                             <div className="flex items-start justify-between mb-8">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-[#252525] border border-white/10 flex items-center justify-center text-white font-bold font-sans tracking-wider">
+                                    <div className="w-12 h-12 rounded-full bg-[var(--theme-panel)] border border-brand-border flex items-center justify-center text-brand-text font-bold font-sans tracking-wider">
                                         {getInitials(selectedMessage.firstName, selectedMessage.lastName)}
                                     </div>
                                     <div>
-                                        <h2 className="text-white font-sans font-bold text-lg">
+                                        <h2 className="text-brand-text font-sans font-bold text-lg">
                                             {selectedMessage.firstName} {selectedMessage.lastName}
                                         </h2>
                                         <div className="flex items-center gap-2 text-sm text-brand-muted mt-0.5">
                                             <span>{selectedMessage.email}</span>
-                                            <span className="text-white/20">•</span>
+                                            <span className="text-brand-text/20">•</span>
                                             <span className="flex items-center gap-1">
                                                 <Phone size={12} /> {selectedMessage.phone}
                                             </span>
@@ -291,7 +291,7 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                             </div>
 
                             {/* Subject / Type Header */}
-                            <h1 className="text-3xl text-white mb-6 fancy-text border-b border-brand-border/50 pb-6">
+                            <h1 className="text-3xl text-brand-text mb-6 fancy-text border-b border-brand-border/50 pb-6">
                                 {selectedMessage.type} SUBMISSION
                             </h1>
 
@@ -302,17 +302,17 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
 
                             {/* Attachment Block */}
                             {selectedMessage.cvUrl && (
-                                <div className="mt-12 p-4 rounded-xl border border-brand-border bg-[#151515] inline-block min-w-[300px]">
-                                    <h3 className="text-white font-sans font-bold mb-3 flex items-center gap-2">
+                                <div className="mt-12 p-4 rounded-xl border border-brand-border bg-[var(--theme-bg)] inline-block min-w-[300px]">
+                                    <h3 className="text-brand-text font-sans font-bold mb-3 flex items-center gap-2">
                                         <FileText size={16} className="text-brand-accent" />
                                         Attachment
                                     </h3>
-                                    <div className="flex items-center justify-between p-3 bg-[#1d1d1d] border border-white/5 rounded-lg">
+                                    <div className="flex items-center justify-between p-3 bg-brand-bg border border-brand-border rounded-lg">
                                         <div className="flex items-center gap-3">
                                             <div className="p-2 bg-brand-accent/10 text-brand-accent rounded">
                                                 <FileText size={20} />
                                             </div>
-                                            <span className="text-sm text-white font-sans truncate max-w-[150px]" title={selectedMessage.cvUrl.split('/').pop()}>
+                                            <span className="text-sm text-brand-text font-sans truncate max-w-[150px]" title={selectedMessage.cvUrl.split('/').pop()}>
                                                 {selectedMessage.cvUrl.split('/').pop() || `${selectedMessage.firstName}_CV.pdf`}
                                             </span>
                                         </div>
@@ -321,16 +321,16 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                                                 href={selectedMessage.cvUrl.startsWith('http') ? selectedMessage.cvUrl : `${process.env.NEXT_PUBLIC_MAIN_SITE_URL || 'http://localhost:3000'}${selectedMessage.cvUrl.startsWith('/') ? '' : '/'}${selectedMessage.cvUrl}`} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
-                                                className="text-xs text-brand-accent hover:text-white transition-colors px-2 py-1"
+                                                className="text-xs text-brand-accent hover:text-brand-text transition-colors px-2 py-1"
                                             >
                                                 View
                                             </a>
-                                            <span className="text-white/20">|</span>
+                                            <span className="text-brand-text/20">|</span>
                                             <a 
                                                 href={selectedMessage.cvUrl.startsWith('http') ? selectedMessage.cvUrl : `${process.env.NEXT_PUBLIC_MAIN_SITE_URL || 'http://localhost:3000'}${selectedMessage.cvUrl.startsWith('/') ? '' : '/'}${selectedMessage.cvUrl}`} 
                                                 download
                                                 target="_blank"
-                                                className="text-xs text-brand-accent hover:text-white transition-colors px-2 py-1"
+                                                className="text-xs text-brand-accent hover:text-brand-text transition-colors px-2 py-1"
                                             >
                                                 Download
                                             </a>
@@ -344,8 +344,8 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                 ) : (
                     // Empty State
                     <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-                        <Mail className="w-16 h-16 text-white/5 mb-4" />
-                        <h3 className="text-xl text-white fancy-text">Select a message</h3>
+                        <Mail className="w-16 h-16 text-brand-text/5 mb-4" />
+                        <h3 className="text-xl text-brand-text fancy-text">Select a message</h3>
                         <p className="text-brand-muted text-sm mt-2 max-w-xs">
                             Choose a message from the list to read its contents and manage attachments.
                         </p>

@@ -121,7 +121,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                             <p className="text-[10px] font-sans tracking-widest text-brand-muted uppercase">Product ID: {product.id.split('-')[0]}...</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="transition-colors p-2 btn-glass-secondary rounded-full font-sans text-white">
+ <button onClick={onClose} className="transition-colors p-2 btn-glass-secondary rounded-full font-sans ">
                         <X size={24} />
                     </button>
                 </div>
@@ -137,7 +137,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                                     required
                                     value={name}
                                     onChange={e => setName(e.target.value)}
-                                    className="w-full px-4 py-3 bg-[#1a1a1a] border border-brand-border focus:border-brand-accent outline-none font-sans text-sm transition-all"
+                                    className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-accent outline-none font-sans text-sm transition-all"
                                     placeholder="Product Name"
                                 />
                             </div>
@@ -149,7 +149,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                                         required
                                         value={categoryId}
                                         onChange={e => setCategoryId(e.target.value)}
-                                        className="w-full px-4 py-3 bg-[#1a1a1a] border border-brand-border focus:border-brand-accent outline-none font-sans text-sm transition-all appearance-none cursor-pointer"
+                                        className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-accent outline-none font-sans text-sm transition-all appearance-none cursor-pointer"
                                     >
                                         {categories.map(c => (
                                             <option key={c.id} value={c.id}>{c.name}</option>
@@ -161,7 +161,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                                     <select 
                                         value={subCategoryId}
                                         onChange={e => setSubCategoryId(e.target.value)}
-                                        className="w-full px-4 py-3 bg-[#1a1a1a] border border-brand-border focus:border-brand-accent outline-none font-sans text-sm transition-all appearance-none cursor-pointer disabled:opacity-50"
+                                        className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-accent outline-none font-sans text-sm transition-all appearance-none cursor-pointer disabled:opacity-50"
                                     >
                                         <option value="">None</option>
                                         {currentCategory?.subCategories.map(s => (
@@ -181,7 +181,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                                             <button 
                                                 type="button"
                                                 onClick={() => removeExistingImage(i)}
-                                                className="absolute -top-2 -right-2 bg-red-500 text-white p-1 shadow-md hover:bg-black transition-colors"
+                                                className="absolute -top-2 -right-2 bg-red-500 text-brand-text p-1 shadow-md hover:bg-black transition-colors"
                                             >
                                                 <X size={12} />
                                             </button>
@@ -194,7 +194,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                                             <button 
                                                 type="button"
                                                 onClick={() => removeNewImage(i)}
-                                                className="absolute -top-2 -right-2 bg-red-500 text-white p-1 shadow-md hover:bg-black transition-colors"
+                                                className="absolute -top-2 -right-2 bg-red-500 text-brand-text p-1 shadow-md hover:bg-black transition-colors"
                                             >
                                                 <X size={12} />
                                             </button>
@@ -244,7 +244,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                         <button 
                             type="button" 
                             onClick={onClose}
-                            className="px-8 py-3 btn-glass-secondary text-brand-text text-xs tracking-widest uppercase border border-brand-border hover:btn-glass-secondary transition-all shadow-sm rounded-full font-sans"
+ className="px-8 py-3 btn-glass-secondary text-xs tracking-widest uppercase border border-brand-border hover:btn-glass-secondary transition-all shadow-sm rounded-full font-sans"
                         >
                             Cancel
                         </button>
@@ -255,7 +255,7 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                             className="px-8 py-3 btn-glass-primary text-xs tracking-widest uppercase transition-all shadow-md disabled:opacity-50 flex items-center gap-2 rounded-full font-sans"
                         >
                             {isSaving ? (
-                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                <div className="w-4 h-4 border-2 border-brand-border border-t-white rounded-full animate-spin" />
                             ) : (
                                 <Save size={16} />
                             )}
@@ -280,9 +280,9 @@ export default function ProductEditModal({ product, categories, onClose }: Props
                             <button 
                                 onClick={handleDelete}
                                 disabled={isDeleting}
-                                className="w-full py-4 bg-red-600 text-white font-sans text-sm font-bold tracking-widest uppercase hover:bg-black transition-all flex items-center justify-center gap-2 btn-glass-secondary rounded-full"
+ className="w-full py-4 bg-red-600 font-sans text-sm font-bold tracking-widest uppercase hover:bg-black transition-all flex items-center justify-center gap-2 btn-glass-secondary rounded-full"
                             >
-                                {isDeleting && <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
+                                {isDeleting && <div className="w-4 h-4 border-2 border-brand-border border-t-white rounded-full animate-spin" />}
                                 Delete Permanently
                             </button>
                             <button 

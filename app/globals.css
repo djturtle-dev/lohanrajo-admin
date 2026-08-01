@@ -2,15 +2,15 @@
 
 @theme {
     /* === Lohanrajo Brand Palette === */
-    --color-brand-bg:       #000000;
-    --color-brand-panel:    #111111;
-    --color-brand-border:   #333333;
+    --color-brand-bg:       var(--theme-bg);
+    --color-brand-panel:    var(--theme-panel);
+    --color-brand-border:   var(--theme-border);
     --color-brand-accent:   #b8241d;
     --color-brand-accent2:  #d42e26;
-    --color-brand-primary:  #eaeaea;
-    --color-brand-text:     #F9F9F9;
-    --color-brand-muted:    #eaeaea;
-    --color-brand-dark:     #333333;
+    --color-brand-primary:  var(--theme-primary);
+    --color-brand-text:     var(--theme-text);
+    --color-brand-muted:    var(--theme-muted);
+    --color-brand-dark:     var(--theme-dark);
     --color-brand-white:    #F9F9F9;
 
     --font-oswald: var(--font-oswald), sans-serif;
@@ -42,9 +42,29 @@
 }
 
 @layer base {
+    :root {
+        --theme-bg: #eaeaea;
+        --theme-panel: #ffffff;
+        --theme-border: #cccccc;
+        --theme-primary: #111111;
+        --theme-text: #111111;
+        --theme-muted: #666666;
+        --theme-dark: #dddddd;
+    }
+
+    .dark {
+        --theme-bg: #000000;
+        --theme-panel: #111111;
+        --theme-border: #333333;
+        --theme-primary: #eaeaea;
+        --theme-text: #F9F9F9;
+        --theme-muted: #eaeaea;
+        --theme-dark: #333333;
+    }
+
     body {
-        background-color: #000000;
-        color: #F9F9F9;
+        background-color: var(--theme-bg);
+        color: var(--theme-text);
         scroll-behavior: smooth;
     }
 }
@@ -124,7 +144,7 @@
     }
 
     .nav-glass {
-        @apply relative rounded-full transition-all duration-500 backdrop-blur-xl;
+        @apply relative rounded-full transition-all duration-500 backdrop-blur-xl text-white;
         background: linear-gradient(180deg, rgba(35,35,35,0.8) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.7) 100%);
         border: 1px solid rgba(255,255,255,0.1);
         box-shadow:
@@ -139,8 +159,14 @@
     }
     /* Universal Glass Card Effect */
     .card-glass {
-        @apply relative backdrop-blur-2xl transition-all duration-300 overflow-hidden;
+        @apply relative transition-all duration-300 overflow-hidden;
         border-radius: 12px;
+        background: var(--theme-panel);
+        border: 1px solid var(--theme-border);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    .dark .card-glass {
+        @apply backdrop-blur-2xl;
         background: linear-gradient(145deg, rgba(20, 20, 20, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-right-color: rgba(255, 255, 255, 0.02);
@@ -150,7 +176,7 @@
             inset 1px 0 1px rgba(255, 255, 255, 0.05),
             0 20px 40px -10px rgba(0, 0, 0, 0.8);
     }
-    .card-glass::before {
+    .dark .card-glass::before {
         content: '';
         position: absolute;
         inset: 0;
@@ -160,6 +186,10 @@
         z-index: 10;
     }
     .card-glass:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    .dark .card-glass:hover {
         background: linear-gradient(145deg, rgba(30, 30, 30, 0.5) 0%, rgba(10, 10, 10, 0.3) 100%);
         border-color: rgba(255, 255, 255, 0.2);
         border-right-color: rgba(255, 255, 255, 0.05);
@@ -169,7 +199,6 @@
             inset 1px 0 2px rgba(255, 255, 255, 0.1),
             0 30px 60px -15px rgba(0, 0, 0, 0.9),
             0 0 40px rgba(184, 36, 29, 0.15); /* Soft brand glow */
-        transform: translateY(-4px);
     }
 }
 

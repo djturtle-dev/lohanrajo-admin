@@ -41,7 +41,7 @@ export default async function UsersAdmin() {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse min-w-[800px]">
                         <thead>
-                            <tr className="border-b border-brand-border bg-[#1a1a1a]/50">
+                            <tr className="border-b border-brand-border bg-brand-bg/50">
                                 <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted">Email Address</th>
                                 <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-center">Role</th>
                                 <th className="p-4 font-sans text-xs tracking-widest uppercase text-brand-muted text-center">Approved</th>
@@ -51,7 +51,7 @@ export default async function UsersAdmin() {
                         </thead>
                         <tbody className="divide-y divide-brand-border">
                             {allUsers.map((u: PrismaUser) => (
-                                <tr key={u.id} className="hover:bg-[#1a1a1a]/20 transition-colors group">
+                                <tr key={u.id} className="hover:bg-brand-bg/20 transition-colors group">
                                     <td className="p-4 font-sans text-sm text-brand-text font-medium">
                                         {u.email}
                                         {u.email === email && (
@@ -97,7 +97,7 @@ export default async function UsersAdmin() {
                                                         <input type="hidden" name="currentRole" value={u.role} />
                                                         <button
                                                             type="submit"
-                                                            className="text-[10px] font-sans uppercase tracking-widest border hover:border-brand-accent/20 px-2 py-1 transition-all btn-glass-secondary rounded-full text-white"
+ className="text-[10px] font-sans uppercase tracking-widest border hover:border-brand-accent/20 px-2 py-1 transition-all btn-glass-secondary rounded-full "
                                                         >
                                                             Switch to {u.role === 'ADMIN' ? 'Editor' : 'Admin'}
                                                         </button>
@@ -109,7 +109,7 @@ export default async function UsersAdmin() {
                                                         <input type="hidden" name="currentStatus" value={String(u.isApproved)} />
                                                         <button
                                                             type="submit"
-                                                            className={cn("btn-glass-secondary rounded-full font-sans text-white px-4 py-2 text-[10px] uppercase tracking-widest transition-all",
+ className={cn("btn-glass-secondary rounded-full font-sans px-4 py-2 text-[10px] uppercase tracking-widest transition-all",
                                                                 u.isApproved
                                                                     ? "hover:text-red-600 hover:border-red-200"
                                                                     : "bg-brand-accent hover:bg-brand-accent/90"
@@ -129,7 +129,7 @@ export default async function UsersAdmin() {
                 </div>
             </div>
 
-            <div className="bg-[#1a1a1a]/50 border border-dashed border-brand-border p-6 text-sm text-brand-muted">
+            <div className="bg-brand-bg/50 border border-dashed border-brand-border p-6 text-sm text-brand-muted">
                 <p className="font-sans uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
                     <ShieldAlert size={16} className="text-brand-accent" /> Security Notice
                 </p>

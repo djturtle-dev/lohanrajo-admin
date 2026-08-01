@@ -197,7 +197,7 @@ export default function ProductsTable({ initialProducts, categories }: Props) {
                                 <td className="p-4 text-right">
                                     <button 
                                         onClick={() => setSelectedProduct(p)}
-                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-panel border border-brand-border text-brand-text hover:bg-brand-accent hover:text-white hover:border-brand-accent transition-all font-sans text-[10px] uppercase tracking-widest shadow-sm"
+                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-panel border border-brand-border text-white hover:bg-brand-accent hover:text-white hover:border-brand-accent transition-all font-sans text-[10px] uppercase tracking-widest shadow-sm"
                                     >
                                         <Edit size={14} />
                                         Edit

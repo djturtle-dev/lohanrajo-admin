@@ -100,7 +100,7 @@ export default function SidebarClient({ children, role, user }: {
             )}>
                 <nav className="p-4 flex flex-col h-full bg-brand-panel">
                     {/* User Profile in Mobile Menu */}
-                    <div className="flex items-center gap-4 mb-8 p-4 bg-[#1a1a1a] border border-brand-border">
+                    <div className="flex items-center gap-4 mb-8 p-4 bg-brand-bg border border-brand-border">
                         <div className="w-12 h-12 bg-brand-panel border border-brand-border flex items-center justify-center text-brand-accent overflow-hidden">
                             {user?.image ? (
                                 <Image src={user.image} alt={user.name || ''} width={48} height={48} className="w-full h-full object-cover" />

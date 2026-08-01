@@ -74,7 +74,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
                     type="text"
                     name="name"
                     placeholder="e.g. Stainless Steel IP65 Enclosure"
-                    className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors rounded-full placeholder-brand-muted/40"
+                    className="w-full bg-brand-bg border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors rounded-full placeholder-brand-muted/40"
                 />
             </div>
 
@@ -99,7 +99,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
                 <select
                     name="subCategoryId"
                     disabled={!selectedCategoryId}
-                    className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none disabled:opacity-50 rounded-full placeholder-brand-muted/40"
+                    className="w-full bg-brand-bg border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none disabled:opacity-50 rounded-full placeholder-brand-muted/40"
                 >
                     <option value="">Select a sub-category</option>
                     {currentCategory?.subCategories.map(s => (
@@ -151,7 +151,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
             <div className="md:col-span-2">
                 <button
                     type="submit"
-                    className="bg-brand-accent text-brand-white px-8 py-3 font-sans font-bold tracking-widest uppercase hover:bg-red-700 transition-colors btn-glass-secondary rounded-full text-white"
+ className="bg-brand-accent px-8 py-3 font-sans font-bold tracking-widest uppercase hover:bg-red-700 transition-colors btn-glass-secondary rounded-full "
                 >
                     Add Product
                 </button>

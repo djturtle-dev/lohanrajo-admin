@@ -52,7 +52,7 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
                             Animated Hero Lines
                         </h2>
                         <p className="text-sm text-brand-muted mt-1 flex items-center gap-1">
-                            <Info size={14} /> Wrap text in asterisks to highlight in red, e.g., <code className="bg-[#1a1a1a] px-1">*Metal Arts*</code>
+                            <Info size={14} /> Wrap text in asterisks to highlight in red, e.g., <code className="bg-brand-bg px-1">*Metal Arts*</code>
                         </p>
                     </div>
                 </div>
@@ -82,7 +82,7 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
                     <button
                         type="button"
                         onClick={addHeroLine}
-                        className="flex items-center gap-2 text-sm font-sans uppercase tracking-widest transition mt-4 px-2 btn-glass-secondary rounded-full text-white"
+ className="flex items-center gap-2 text-sm font-sans uppercase tracking-widest transition mt-4 px-2 btn-glass-secondary rounded-full "
                     >
                         <Plus size={16} /> Add Line
                     </button>
@@ -100,7 +100,7 @@ export default function HomeContentEditor({ initialData }: { initialData: any })
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {pillars.map((pillar, index) => (
-                        <div key={index} className="p-6 border border-brand-border bg-[#1a1a1a]/20 flex flex-col gap-4">
+                        <div key={index} className="p-6 border border-brand-border bg-brand-bg/20 flex flex-col gap-4">
                             <div>
                                 <label className="block text-xs font-sans uppercase tracking-widest text-brand-muted mb-1">Lucide Icon Name</label>
                                 <input
