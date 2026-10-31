@@ -1,7 +1,15 @@
 export function getAssetUrl(path: string | null | undefined): string {
     if (!path) return '';
     
-    // If it's already an absolute URL, return it
+    // If it's a localhost URL from previous database entries, strip host to load from current origin
+    if (path.startsWith('http://localhost') || path.startsWith('http://127.0.0.1')) {
+        try {
+            const url = new URL(path);
+            return url.pathname + url.search;
+        } catch {}
+    }
+
+    // If it's an external remote URL (like production Netlify CDN), return it directly
     if (path.startsWith('http://') || path.startsWith('https://')) {
         return path;
     }
@@ -9,13 +17,8 @@ export function getAssetUrl(path: string | null | undefined): string {
     // Ensure path starts with /
     const normalizedPath = path.startsWith('/') ? path : `/${path}`;
 
-    // On the admin app, it can serve its own local assets
-    const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'http://localhost:3001';
-    
-    // Remove trailing slash from adminUrl if present
-    const base = adminUrl.endsWith('/') ? adminUrl.slice(0, -1) : adminUrl;
-    
-    return `${base}${normalizedPath}`;
+    // On the admin app, serve assets directly as relative paths
+    return normalizedPath;
 }
 
 export function cn(...inputs: any[]) {

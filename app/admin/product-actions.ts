@@ -60,9 +60,7 @@ export async function addProduct(formData: FormData) {
         await fs.mkdir(uploadDir, { recursive: true });
         await fs.writeFile(path.join(uploadDir, filename), Buffer.from(buffer));
         
-        // We need to use the full URL if we're on a different port than the main site
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
-        imageUrls.push(`${baseUrl}/uploads/products/${filename}`);
+        imageUrls.push(`/uploads/products/${filename}`);
       }
     }
   }
@@ -149,8 +147,7 @@ export async function updateProduct(formData: FormData) {
         await fs.mkdir(uploadDir, { recursive: true });
         await fs.writeFile(path.join(uploadDir, filename), Buffer.from(buffer));
         
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
-        imageUrls.push(`${baseUrl}/uploads/products/${filename}`);
+        imageUrls.push(`/uploads/products/${filename}`);
       }
     }
   }

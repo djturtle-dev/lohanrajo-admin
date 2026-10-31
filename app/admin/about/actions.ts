@@ -121,9 +121,7 @@ export async function updateAboutContent(formData: FormData) {
         await fs.mkdir(uploadDir, { recursive: true });
         await fs.writeFile(path.join(uploadDir, filename), Buffer.from(buffer));
         
-        // Use an absolute URL for local dev so the main site can access it
-        const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'http://localhost:3001';
-        profileImage = `${adminUrl}/uploads/about/${filename}`;
+        profileImage = `/uploads/about/${filename}`;
       }
     } catch (err: any) {
       console.error('Core upload error:', err);

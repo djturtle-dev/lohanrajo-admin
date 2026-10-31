@@ -18,7 +18,24 @@ export async function GET(
     );
     const useBlobs = isNetlify || (!!process.env.NETLIFY_SITE_ID && !!process.env.NETLIFY_AUTH_TOKEN);
     if (!useBlobs) {
-      throw new Error('Missing Netlify environment');
+      const prodUrl = process.env.NEXT_PUBLIC_PROD_ADMIN_URL || 'https://lohanrajo-admin.netlify.app';
+      const remoteRes = await fetch(`${prodUrl}/api/blobs/${filename}?${searchParams.toString()}`);
+      if (remoteRes.ok) {
+        const arrayBuf = await remoteRes.arrayBuffer();
+        const contentType = remoteRes.headers.get('Content-Type') || (
+          filename.toLowerCase().endsWith('.png') ? 'image/png' 
+          : filename.toLowerCase().endsWith('.svg') ? 'image/svg+xml'
+          : filename.toLowerCase().endsWith('.webp') ? 'image/webp'
+          : 'image/jpeg'
+        );
+        return new NextResponse(arrayBuf, {
+          headers: {
+            'Content-Type': contentType,
+            'Cache-Control': 'public, max-age=31536000, immutable',
+          },
+        });
+      }
+      return new NextResponse('Not Found', { status: 404 });
     }
     const store = getStore(storeName);
     const blob = await store.get(filename, { type: 'blob' });
