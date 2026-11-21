@@ -7,7 +7,7 @@ import {
     Briefcase, HelpCircle, Phone, Info, FileText, 
     Filter, ArrowLeft, Edit3, Plus, Table as TableIcon, 
     Columns2, ExternalLink, Calendar, CheckCircle2,
-    Eye
+    Eye, Tag, Package
 } from 'lucide-react';
 import { toggleMessageRead, deleteMessage } from './actions';
 import { cn } from '@/lib/utils';
@@ -18,6 +18,60 @@ import {
     exportContactsToCSV 
 } from '@/lib/contact';
 import ContactEditModal from '@/components/admin/ContactEditModal';
+
+interface TaggedProductMeta {
+    id: string;
+    name: string;
+    image?: string;
+    category?: string;
+    subCategory?: string;
+}
+
+function parseTaggedProducts(content: string): { cleanContent: string; taggedProducts: TaggedProductMeta[] } {
+    if (!content) return { cleanContent: '', taggedProducts: [] };
+
+    let taggedProducts: TaggedProductMeta[] = [];
+
+    // 1. Try parsing JSON metadata comment
+    const jsonMatch = content.match(/<!--\s*TAGGED_PRODUCTS_JSON:\s*([\s\S]*?)\s*-->/);
+    if (jsonMatch && jsonMatch[1]) {
+        try {
+            taggedProducts = JSON.parse(jsonMatch[1]);
+        } catch (e) {
+            console.error('Failed to parse tagged products JSON:', e);
+        }
+    }
+
+    // 2. Fallback: Parse from "Referenced Products:" lines if JSON wasn't present
+    if (taggedProducts.length === 0) {
+        const refMatch = content.match(/---\s*Referenced Products:\s*([\s\S]*)$/i);
+        if (refMatch && refMatch[1]) {
+            const lines = refMatch[1].split('\n').filter(l => l.trim().startsWith('•') || l.trim().startsWith('-'));
+            taggedProducts = lines.map((line, idx) => {
+                const cleaned = line.replace(/^[•\-]\s*/, '').trim();
+                const catMatch = cleaned.match(/\[(.*?)\]/);
+                const name = catMatch ? cleaned.replace(/\[.*?\]/, '').trim() : cleaned;
+                return {
+                    id: `ref-${idx}`,
+                    name,
+                    category: catMatch ? catMatch[1] : undefined
+                };
+            });
+        }
+    }
+
+    // Clean up content for display in message body
+    let cleanContent = content
+        .replace(/<!--\s*TAGGED_PRODUCTS_JSON:\s*[\s\S]*?\s*-->/g, '')
+        .replace(/---\s*Referenced Products:[\s\S]*$/i, '')
+        .trim();
+
+    if (!cleanContent) {
+        cleanContent = "(No additional message provided)";
+    }
+
+    return { cleanContent, taggedProducts };
+}
 
 interface MessagesSplitViewProps {
     initialMessages: ContactSubmission[];
@@ -360,7 +414,19 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
 
                                                 {/* Message content */}
                                                 <td className="py-3 px-4 text-xs text-brand-muted max-w-xs truncate" title={msg.content}>
-                                                    {msg.content}
+                                                    {(() => {
+                                                        const { cleanContent, taggedProducts } = parseTaggedProducts(msg.content);
+                                                        return (
+                                                            <div className="flex items-center gap-1.5 truncate">
+                                                                {taggedProducts.length > 0 && (
+                                                                    <span className="shrink-0 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-brand-accent/15 text-brand-accent text-[10px] font-semibold border border-brand-accent/30">
+                                                                        <Tag size={10} /> {taggedProducts.length}
+                                                                    </span>
+                                                                )}
+                                                                <span className="truncate">{cleanContent}</span>
+                                                            </div>
+                                                        );
+                                                    })()}
                                                 </td>
 
                                                 {/* Date */}
@@ -550,9 +616,24 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                                                     </span>
                                                 </div>
 
-                                                <p className="text-xs text-brand-muted line-clamp-2 pr-4">
-                                                    {msg.content}
-                                                </p>
+                                                {(() => {
+                                                    const { cleanContent, taggedProducts } = parseTaggedProducts(msg.content);
+                                                    return (
+                                                        <>
+                                                            {taggedProducts.length > 0 && (
+                                                                <div className="flex items-center gap-1.5 my-1">
+                                                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-sans font-medium bg-brand-accent/10 border border-brand-accent/30 text-brand-accent">
+                                                                        <Tag size={10} />
+                                                                        {taggedProducts.length} {taggedProducts.length === 1 ? 'Product' : 'Products'}
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                            <p className="text-xs text-brand-muted line-clamp-2 pr-4">
+                                                                {cleanContent}
+                                                            </p>
+                                                        </>
+                                                    );
+                                                })()}
                                                 
                                                 {!msg.isRead && (
                                                     <div className="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent rounded-full" />
@@ -668,10 +749,90 @@ export default function MessagesSplitView({ initialMessages }: MessagesSplitView
                                         </span>
                                     </h1>
 
-                                    {/* Message Body */}
-                                    <div className="prose prose-invert max-w-none font-sans text-brand-text/90 leading-relaxed whitespace-pre-wrap text-base bg-brand-bg/50 p-6 rounded-xl border border-brand-border">
-                                        {selectedMessage.content}
-                                    </div>
+                                    {(() => {
+                                        const { cleanContent, taggedProducts } = parseTaggedProducts(selectedMessage.content);
+                                        const siteUrl = process.env.NEXT_PUBLIC_MAIN_SITE_URL || 'http://localhost:3000';
+
+                                        return (
+                                            <>
+                                                {/* Tagged Products Showcase */}
+                                                {taggedProducts.length > 0 && (
+                                                    <div className="mb-6 p-5 rounded-xl border border-brand-accent/40 bg-brand-accent/5 space-y-3.5 shadow-xs">
+                                                        <div className="flex items-center justify-between border-b border-brand-accent/20 pb-2.5">
+                                                            <div className="flex items-center gap-2 text-brand-accent">
+                                                                <Tag size={15} />
+                                                                <h3 className="text-xs font-sans font-bold tracking-widest uppercase">
+                                                                    Tagged Product Inquiry ({taggedProducts.length})
+                                                                </h3>
+                                                            </div>
+                                                            <span className="text-[10px] font-sans text-brand-muted">
+                                                                Selected via Contact Form
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                            {taggedProducts.map((prod, idx) => {
+                                                                const prodUrl = `${siteUrl}/products/${prod.id}`;
+                                                                const rawImg = prod.image;
+                                                                const imgUrl = rawImg ? (rawImg.startsWith('http') ? rawImg : `${siteUrl}${rawImg.startsWith('/') ? '' : '/'}${rawImg}`) : null;
+
+                                                                return (
+                                                                    <div 
+                                                                        key={prod.id || idx}
+                                                                        className="flex items-center gap-3 p-3 rounded-lg border border-brand-border bg-brand-bg/90 hover:border-brand-accent/60 transition-colors shadow-xs group"
+                                                                    >
+                                                                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-brand-panel shrink-0 border border-brand-border/80 flex items-center justify-center relative">
+                                                                            {imgUrl ? (
+                                                                                <img 
+                                                                                    src={imgUrl} 
+                                                                                    alt={prod.name}
+                                                                                    className="w-full h-full object-cover" 
+                                                                                />
+                                                                            ) : (
+                                                                                <Package size={22} className="text-brand-muted" />
+                                                                            )}
+                                                                        </div>
+
+                                                                        <div className="min-w-0 flex-1">
+                                                                            <h4 className="text-sm font-sans font-bold text-brand-text truncate group-hover:text-brand-accent transition-colors" title={prod.name}>
+                                                                                {prod.name}
+                                                                            </h4>
+                                                                            {prod.category ? (
+                                                                                <p className="text-[11px] font-sans text-brand-muted truncate">
+                                                                                    {prod.category}{prod.subCategory ? ` • ${prod.subCategory}` : ''}
+                                                                                </p>
+                                                                            ) : (
+                                                                                <p className="text-[11px] font-sans text-brand-muted truncate">
+                                                                                    Catalog Product
+                                                                                </p>
+                                                                            )}
+                                                                        </div>
+
+                                                                        {prod.id && !prod.id.startsWith('ref-') && !prod.id.startsWith('param-') && (
+                                                                            <a 
+                                                                                href={prodUrl} 
+                                                                                target="_blank" 
+                                                                                rel="noopener noreferrer"
+                                                                                className="p-2 rounded-md text-brand-muted hover:text-brand-accent hover:bg-brand-accent/10 border border-transparent hover:border-brand-accent/30 shrink-0 transition-colors"
+                                                                                title="View Product in Store"
+                                                                            >
+                                                                                <ExternalLink size={14} />
+                                                                            </a>
+                                                                        )}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Message Body */}
+                                                <div className="prose prose-invert max-w-none font-sans text-brand-text/90 leading-relaxed whitespace-pre-wrap text-base bg-brand-bg/50 p-6 rounded-xl border border-brand-border">
+                                                    {cleanContent}
+                                                </div>
+                                            </>
+                                        );
+                                    })()}
 
                                     {/* Attachment Block */}
                                     {selectedMessage.cvUrl && (
