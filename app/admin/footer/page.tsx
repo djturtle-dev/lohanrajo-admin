@@ -1,9 +1,11 @@
 import { prisma } from '@/lib/prisma';
 import FooterContentEditor from './FooterContentEditor';
 
+export const dynamic = 'force-dynamic';
+
 export default async function FooterAdminPage() {
     const [footerContentRecord, categories, products] = await Promise.all([
-        (prisma as any).footerContent.findUnique({
+        prisma.footerContent.findUnique({
             where: { id: 'singleton' }
         }),
         prisma.category.findMany({
@@ -42,7 +44,7 @@ export default async function FooterAdminPage() {
                     <h1 className="text-3xl text-brand-text fancy-text">
                         Footer Content &amp; Links
                     </h1>
-                    <p className="mt-1 text-sm text-brand-muted">
+                    <p className="mt-1 text-sm text-brand-muted font-sans">
                         Customize company tagline and manage dynamic navigation links for Contact and Products columns.
                     </p>
                 </div>

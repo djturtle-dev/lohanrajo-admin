@@ -20,7 +20,7 @@ export async function updateFooterContent(formData: FormData) {
             return { error: 'Invalid JSON format for footer links' };
         }
 
-        await (prisma as any).footerContent.upsert({
+        await prisma.footerContent.upsert({
             where: { id: 'singleton' },
             create: {
                 id: 'singleton',
@@ -38,6 +38,7 @@ export async function updateFooterContent(formData: FormData) {
         revalidatePath('/admin/footer');
         return { success: true };
     } catch (e: any) {
+        console.error('Failed to update footer content:', e);
         return { error: e.message || 'Failed to update footer content' };
     }
 }
