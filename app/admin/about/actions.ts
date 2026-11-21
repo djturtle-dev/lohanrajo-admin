@@ -27,6 +27,7 @@ export async function getAboutContent() {
     subtitle: 'From humble beginnings to an industry leader in IP Standard Enclosures, BMS Panels, and Industrial Metal Arts.',
     profileContent: 'LOHANRAJO Metal Arts was established with a clear mandate: to provide uncompromising quality in electrical enclosures and industrial metal products. Over the years, we have grown from a local supplier to a trusted partner for major infrastructure projects nationwide.\n\nOur commitment to precision engineering, utilizing premium raw materials like Mild Steel and Stainless Steel, ensures that every product leaving our facility meets strict operational standards.',
     profileImage: '/our company.png',
+    galleryImages: [],
     establishedText: 'Established Industry Leaders',
     infrastructureContent: 'Our expansive manufacturing facility is equipped with state-of-the-art CNC machinery, automated welding stations, and an advanced powder-coating line. This robust infrastructure allows us to maintain strict tolerances and scale production seamlessly.',
     infrastructureItems: ['CNC Fabrication', 'Automated Assembly', 'Polymer & Powder Coating'],
@@ -80,52 +81,72 @@ export async function updateAboutContent(formData: FormData) {
   const foundersImageFile = formData.get('foundersImageFile') as File | null;
   let foundersImage = formData.get('foundersImage') as string;
 
+  async function uploadAboutImage(file: File, prefix = 'gallery'): Promise<string> {
+    const { getStore } = await import('@netlify/blobs');
+    const fs = await import('fs/promises');
+    const path = await import('path');
+
+    const buffer = await file.arrayBuffer();
+    const filename = `${prefix}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+    const isNetlify = !!(
+      process.env.NETLIFY ||
+      process.env.NETLIFY_BLOBS_CONTEXT ||
+      process.env.NETLIFY_IMAGES_CDN_DOMAIN ||
+      process.env.SITE_NAME
+    );
+    const useBlobs = isNetlify || (!!process.env.NETLIFY_SITE_ID && !!process.env.NETLIFY_AUTH_TOKEN);
+
+    try {
+      if (!useBlobs) {
+        throw new Error('Missing Netlify environment');
+      }
+      const store = getStore('about');
+      await store.set(filename, buffer, {
+        metadata: { name: `${prefix}-image`, type: file.type }
+      });
+      return `/api/blobs/${filename}?store=about`;
+    } catch (err) {
+      if (isNetlify) {
+        console.error('Netlify Blobs upload failed in production:', err);
+        throw new Error(`Netlify Blobs upload failed: ${err instanceof Error ? err.message : String(err)}`);
+      }
+
+      console.warn('Netlify Blobs upload failed, using local storage fallback:', err);
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'about');
+      await fs.mkdir(uploadDir, { recursive: true });
+      await fs.writeFile(path.join(uploadDir, filename), Buffer.from(buffer));
+      return `/uploads/about/${filename}`;
+    }
+  }
+
   if (profileImageFile && profileImageFile.size > 0) {
-    // Check size limit manually as a precaution
     if (profileImageFile.size > 10 * 1024 * 1024) {
       throw new Error("Image file size exceeds 10MB limit.");
     }
+    profileImage = await uploadAboutImage(profileImageFile, 'profile');
+  }
 
+  // Handle Gallery Images (JSON array + new file uploads)
+  const rawGallery = formData.get('galleryImages') as string;
+  let galleryImages: string[] = [];
+  if (rawGallery) {
     try {
-      const { getStore } = await import('@netlify/blobs');
-      const fs = await import('fs/promises');
-      const path = await import('path');
-      
-      const buffer = await profileImageFile.arrayBuffer();
-      const filename = `profile-${Date.now()}-${profileImageFile.name.replace(/\s+/g, '-')}`;
-      const isNetlify = !!(
-        process.env.NETLIFY || 
-        process.env.NETLIFY_BLOBS_CONTEXT || 
-        process.env.NETLIFY_IMAGES_CDN_DOMAIN || 
-        process.env.SITE_NAME
-      );
-      const useBlobs = isNetlify || (!!process.env.NETLIFY_SITE_ID && !!process.env.NETLIFY_AUTH_TOKEN);
+      galleryImages = JSON.parse(rawGallery);
+      if (!Array.isArray(galleryImages)) galleryImages = [];
+    } catch {
+      galleryImages = [];
+    }
+  }
 
+  const galleryFiles = formData.getAll('galleryImageFiles') as File[];
+  for (const file of galleryFiles) {
+    if (file && file.size > 0 && file.size <= 10 * 1024 * 1024) {
       try {
-        if (!useBlobs) {
-          throw new Error('Missing Netlify environment');
-        }
-        const store = getStore('about');
-        await store.set(filename, buffer, {
-          metadata: { name: 'profile-image', type: profileImageFile.type }
-        });
-        profileImage = `/api/blobs/${filename}?store=about`;
-      } catch (err) {
-        if (isNetlify) {
-          console.error('Netlify Blobs upload failed in production:', err);
-          throw new Error(`Netlify Blobs upload failed: ${err instanceof Error ? err.message : String(err)}`);
-        }
-
-        console.warn('Netlify Blobs upload failed, using local storage fallback:', err);
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'about');
-        await fs.mkdir(uploadDir, { recursive: true });
-        await fs.writeFile(path.join(uploadDir, filename), Buffer.from(buffer));
-        
-        profileImage = `/uploads/about/${filename}`;
+        const uploaded = await uploadAboutImage(file, 'gallery');
+        galleryImages.push(uploaded);
+      } catch (e) {
+        console.error('Failed to upload gallery image:', e);
       }
-    } catch (err: any) {
-      console.error('Core upload error:', err);
-      throw err;
     }
   }
 
@@ -140,6 +161,7 @@ export async function updateAboutContent(formData: FormData) {
         accreditationContent, 
         visionContent, 
         profileImage,
+        galleryImages,
         founderNames
       }
     });
