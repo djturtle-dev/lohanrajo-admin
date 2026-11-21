@@ -1,12 +1,17 @@
 import { prisma } from '@/lib/prisma';
 import CategoriesManager from './CategoriesManager';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CategoriesPage() {
     const categories = await prisma.category.findMany({
+        where: { isDeleted: false },
         include: {
-            subCategories: true,
+            subCategories: {
+                where: { isDeleted: false }
+            },
             _count: {
-                select: { products: true }
+                select: { products: { where: { isDeleted: false } } }
             }
         },
         orderBy: { name: 'asc' }

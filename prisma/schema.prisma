@@ -27,12 +27,14 @@ model Category {
 
 model SubCategory {
   id         String    @id @default(uuid())
-  name       String    @unique
+  name       String
   categoryId String
   category   Category  @relation(fields: [categoryId], references: [id])
   products   Product[]
   isDeleted  Boolean   @default(false)
   createdAt  DateTime  @default(now())
+
+  @@unique([name, categoryId])
 }
 
 model Product {

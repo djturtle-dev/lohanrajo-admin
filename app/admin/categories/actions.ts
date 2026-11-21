@@ -15,21 +15,44 @@ async function getAdminUser() {
 // -- CATEGORIES --
 
 export async function createCategory(formData: FormData) {
-    const name = formData.get('name') as string;
-    if (!name) return { error: 'Name is required' };
+    const rawName = formData.get('name') as string;
+    const name = rawName?.trim();
+    if (!name) return { error: 'Category name is required' };
 
     try {
+        // Check if category already exists (case-insensitive)
+        const existing = await prisma.category.findFirst({
+            where: {
+                name: { equals: name, mode: 'insensitive' }
+            }
+        });
+
+        if (existing) {
+            if (existing.isDeleted) {
+                await prisma.category.update({
+                    where: { id: existing.id },
+                    data: { isDeleted: false, name }
+                });
+                revalidatePath('/admin/categories');
+                revalidatePath('/admin/products');
+                return { success: true, message: 'Category restored' };
+            }
+            return { error: `A category named "${existing.name}" already exists.` };
+        }
+
         await prisma.category.create({ data: { name } });
         revalidatePath('/admin/categories');
+        revalidatePath('/admin/products');
         return { success: true };
     } catch (e: any) {
-        return { error: e.message };
+        return { error: e.message || 'Failed to create category' };
     }
 }
 
 export async function updateCategory(formData: FormData) {
     const id = formData.get('id') as string;
-    const name = formData.get('name') as string;
+    const rawName = formData.get('name') as string;
+    const name = rawName?.trim();
     if (!id || !name) return { error: 'ID and Name are required' };
 
     try {
@@ -38,9 +61,10 @@ export async function updateCategory(formData: FormData) {
             data: { name }
         });
         revalidatePath('/admin/categories');
+        revalidatePath('/admin/products');
         return { success: true };
     } catch (e: any) {
-        return { error: e.message };
+        return { error: e.message || 'Failed to update category' };
     }
 }
 
@@ -62,6 +86,7 @@ export async function deleteCategory(formData: FormData) {
             });
         }
         revalidatePath('/admin/categories');
+        revalidatePath('/admin/products');
         return { success: true };
     } catch (e: any) {
         return { error: 'Cannot delete category with associated products or subcategories.' };
@@ -71,25 +96,48 @@ export async function deleteCategory(formData: FormData) {
 // -- SUBCATEGORIES --
 
 export async function createSubCategory(formData: FormData) {
-    const name = formData.get('name') as string;
+    const rawName = formData.get('name') as string;
+    const name = rawName?.trim();
     const categoryId = formData.get('categoryId') as string;
     
     if (!name || !categoryId) return { error: 'Name and Category are required' };
 
     try {
+        const existing = await prisma.subCategory.findFirst({
+            where: {
+                categoryId,
+                name: { equals: name, mode: 'insensitive' }
+            }
+        });
+
+        if (existing) {
+            if (existing.isDeleted) {
+                await prisma.subCategory.update({
+                    where: { id: existing.id },
+                    data: { isDeleted: false, name }
+                });
+                revalidatePath('/admin/categories');
+                revalidatePath('/admin/products');
+                return { success: true, message: 'Subcategory restored' };
+            }
+            return { error: `Subcategory "${existing.name}" already exists in this category.` };
+        }
+
         await prisma.subCategory.create({
             data: { name, categoryId }
         });
         revalidatePath('/admin/categories');
+        revalidatePath('/admin/products');
         return { success: true };
     } catch (e: any) {
-        return { error: e.message };
+        return { error: e.message || 'Failed to create subcategory' };
     }
 }
 
 export async function updateSubCategory(formData: FormData) {
     const id = formData.get('id') as string;
-    const name = formData.get('name') as string;
+    const rawName = formData.get('name') as string;
+    const name = rawName?.trim();
     const categoryId = formData.get('categoryId') as string;
 
     if (!id || !name || !categoryId) return { error: 'ID, Name, and Category are required' };
@@ -100,9 +148,10 @@ export async function updateSubCategory(formData: FormData) {
             data: { name, categoryId }
         });
         revalidatePath('/admin/categories');
+        revalidatePath('/admin/products');
         return { success: true };
     } catch (e: any) {
-        return { error: e.message };
+        return { error: e.message || 'Failed to update subcategory' };
     }
 }
 
@@ -124,6 +173,7 @@ export async function deleteSubCategory(formData: FormData) {
             });
         }
         revalidatePath('/admin/categories');
+        revalidatePath('/admin/products');
         return { success: true };
     } catch (e: any) {
         return { error: 'Cannot delete subcategory with associated products.' };

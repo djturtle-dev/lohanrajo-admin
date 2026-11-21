@@ -4,6 +4,8 @@ import AddProductForm from '@/components/admin/AddProductForm';
 import ProductsTable from '@/components/admin/ProductsTable';
 import { getAssetUrl } from '@/lib/utils';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminProductsPage() {
     const products = await prisma.product.findMany({
         where: { isDeleted: false },

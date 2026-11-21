@@ -81,8 +81,13 @@ export default function ProductEditModal({ product, categories, onClose }: Props
             existingImages.forEach(img => formData.append('existingImages', img));
             newImages.forEach(file => formData.append('images', file));
 
-            await updateProduct(formData);
+            const res = await updateProduct(formData);
+            if (res && !res.success) {
+                alert(res.error || 'Failed to update product');
+                return;
+            }
             onClose();
+            window.location.reload();
         } catch (error) {
             console.error('Update failed:', error);
             alert('Failed to update product');
@@ -96,8 +101,13 @@ export default function ProductEditModal({ product, categories, onClose }: Props
         try {
             const formData = new FormData();
             formData.append('id', product.id);
-            await deleteProduct(formData);
+            const res = await deleteProduct(formData);
+            if (res && !res.success) {
+                alert(res.error || 'Failed to delete product');
+                return;
+            }
             onClose();
+            window.location.reload();
         } catch (error) {
             console.error('Delete failed:', error);
             alert('Failed to delete product');
