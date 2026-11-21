@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
     Menu, X, LayoutDashboard, Package, Star,
-    UserCheck, FolderTree, Users, Mail
+    UserCheck, FolderTree, Users, Mail, PanelBottom
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SignOutButton from './SignOutButton';
@@ -62,6 +62,7 @@ export default function SidebarClient({ children, role, user }: {
         { href: '/admin/testimonials', icon: Star, label: 'Testimonials' },
         { href: '/admin/home', icon: LayoutDashboard, label: 'Home Page', className: "border-t border-brand-border mt-4 pt-4" },
         { href: '/admin/about', icon: UserCheck, label: 'About Page' },
+        { href: '/admin/footer', icon: PanelBottom, label: 'Footer Links' },
     ];
 
     return (
